@@ -2,3 +2,4 @@ db.sqlite3
 *.idea/*
 *.pyc
 *__pycache__/*
+egoo_core/__pycache__/*

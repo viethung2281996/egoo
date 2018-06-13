@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'egoo_core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'egoo-core',
+        'NAME': 'egoo_core',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
