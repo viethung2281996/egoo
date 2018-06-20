@@ -8,13 +8,13 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = get_user_model().objects.create(
+            username = validated_data['username'],
             email = validated_data['email']
         )
-        if password == re_password:
-            user.set_password(validated_data['password'])
-            user.save()
-            return user
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
 
     class Meta:
         model = get_user_model()
-        fields = ('email', 'password', 're_password')
+        fields = ('username', 'email', 'password', 're_password')
