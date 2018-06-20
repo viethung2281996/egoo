@@ -44,10 +44,14 @@ DJANGO_APP = [
     'rest_framework.authtoken',
     'rest_auth',
     'rest_auth.registration',
+    'django_extensions'
 ]
 
 FUNCTION_APP = [
     'api',
+    'categories',
+    'units',
+    'conversations',
 ]
 
 
