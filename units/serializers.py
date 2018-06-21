@@ -1,32 +1,33 @@
 from units.models import Unit
 from django.db import models
+from categories.serializers import CategorySerializer
 from categories.models import Category
 from rest_framework import serializers
-from categories.serializers import CategorySerializer
 
-class UnitSerializer(serializers.HyperlinkedModelSerializer):
-  category = CategorySerializer(read_only=True)
-  category_id = models.IntegerField(null=False)
+class UnitSerializer(serializers.ModelSerializer):
+  category_id = serializers.IntegerField()
+
+  # def create(self, validated_data):
+  #   unit = Unit.objects.create(
+  #       title = validated_data["title"],
+  #       order = validated_data["order"],
+  #     )
+   
+  #   if unit.save():
+  #     return unit
 
   def create(self, validated_data):
-    import pdb; pdb.set_trace()
-    category = Category.objects.get(pk=validated_data["category_id"])
-    unit = Unit.objects.create(
-        title = validated_data["title"],
-        order = validated_data["order"],
-        category = category
-      )
-   
-    if unit.save():
-      return unit
+    import pdb;pdb.set_trace()
+    category_id = validated_data.pop('category_id')
+    category = Category.objects.get(id=category_id)
+    unit = Unit.objects.create(category=category, **validated_data)
+    return unit
 
   class Meta:
-    fields = (
+    fields = [
       'id',
       'title',
       'order',
-      'category',
-      'category_id'
-      )
+      'category_id',
+      ]
     model = Unit
-    depth=1

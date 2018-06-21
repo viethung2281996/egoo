@@ -104,3 +104,6 @@ ENV/
 pyenv/
 Pipfile
 Pipfile.lock
+categories/migrations
+units/migrations
+conversations/migrations

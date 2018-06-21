@@ -1,9 +1,10 @@
 from rest_framework import serializers
 from units.serializers import UnitSerializer
+from units.models import Unit
 from conversations.models import Conversation
 
 class ConversationSerializer(serializers.ModelSerializer):
-  unit = UnitSerializer(read_only=True)
+  unit_id = serializers.IntegerField()
   class Meta:
     fields = (
       'id',
@@ -11,6 +12,13 @@ class ConversationSerializer(serializers.ModelSerializer):
       'image',
       'audio',
       'order',
-      'unit',
+      'unit_id'
       )
     model = Conversation
+
+  def create(self, validated_data):
+    import pdb;pdb.set_trace()
+    unit_id = validated_data.pop('unit_id')
+    unit = Unit.objects.get(id=unit_id)
+    conversation = Conversation.objects.create(unit=unit, **validated_data)
+    return conversation

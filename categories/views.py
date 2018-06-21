@@ -1,9 +1,9 @@
-from rest_framework import generics
+from rest_framework import generics, permissions
 from categories.models import Category
 from . import serializers
 # Create your views here.
 
-class ListCategory(generics.ListCreateAPIView):
+class ListCategory(generics.ListCreateAPIView): 
   queryset = Category.objects.all()
   serializer_class = serializers.CategorySerializer
 

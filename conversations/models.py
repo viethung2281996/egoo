@@ -10,6 +10,7 @@ class Conversation(models.Model):
   unit = models.ForeignKey(
     Unit,
     on_delete=models.CASCADE,
+    related_name='list_conversation',
     )
 
   def __str__(self):
