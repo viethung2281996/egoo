@@ -9,7 +9,6 @@ from rest_framework.permissions import IsAuthenticated
 #Create your views here.
 
 class ListConversation(generics.ListCreateAPIView):
-  permission_classes = (IsAuthenticated,)
   queryset = Conversation.objects.all()
   serializer_class = serializers.ConversationSerializer
 
