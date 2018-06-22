@@ -144,7 +144,6 @@ DATABASE_URL='mysql://b7dc1c0beff351:29c857b5@us-cdbr-iron-east-04.cleardb.net/h
 DATABASES = {
     'default': dj_database_url.config(
         default='DATABASE_URL',
-        ssl_required=False,
     )
 }
 
