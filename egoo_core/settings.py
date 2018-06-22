@@ -15,41 +15,6 @@ import datetime
 import dj_database_url
 import django_heroku
 
-import os
-import sys
-import urlparse
-
-# Register database schemes in URLs.
-urlparse.uses_netloc.append('mysql')
-
-try:
-
-    # Check to make sure DATABASES is set in settings.py file.
-    # If not default to {}
-
-    if 'DATABASES' not in locals():
-        DATABASES = {}
-
-    if 'DATABASE_URL' in os.environ:
-        url = urlparse.urlparse(os.environ['DATABASE_URL'])
-
-        # Ensure default database exists.
-        DATABASES['default'] = DATABASES.get('default', {})
-
-        # Update with environment configuration.
-        DATABASES['default'].update({
-            'NAME': url.path[1:],
-            'USER': url.username,
-            'PASSWORD': url.password,
-            'HOST': url.hostname,
-            'PORT': url.port,
-        })
-    
-
-        if url.scheme == 'mysql':
-            DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
-except Exception:
-    print('Unexpected error:', sys.exc_info())
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -178,12 +143,9 @@ WSGI_APPLICATION = 'egoo_core.wsgi.application'
 #     }
 # }
 # DATABASE_URL='mysql://b7dc1c0beff351:29c857b5@us-cdbr-iron-east-04.cleardb.net/heroku_68b9e8d436b5c9e'
-DATABASES = {
-    'default': dj_database_url.config(
-        default='DATABASE_URL',
-    )
-}
-
+db_from_env = dj_database_url.config(conn_max_age=600)
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
