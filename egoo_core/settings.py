@@ -144,7 +144,7 @@ WSGI_APPLICATION = 'egoo_core.wsgi.application'
 DATABASE_URL='mysql://b7dc1c0beff351:29c857b5@us-cdbr-iron-east-04.cleardb.net/heroku_68b9e8d436b5c9e?reconnect=true'
 DATABASES = {
     'default': dj_database_url.config(
-        default=config('DATABASE_URL')
+        default='DATABASE_URL'
     )
 }
 
