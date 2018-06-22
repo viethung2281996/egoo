@@ -12,6 +12,7 @@ djangorestframework-jwt = "*"
 gunicorn = "*"
 django-heroku = "*"
 dj-database-url = "*"
+django-rest-auth = "*"
 
 [requires]
 python_version = "3.5"
