@@ -140,7 +140,7 @@ WSGI_APPLICATION = 'egoo_core.wsgi.application'
 #         'PORT': '3306',
 #     }
 # }
-DATABASE_URL='mysql://b7dc1c0beff351:29c857b5@us-cdbr-iron-east-04.cleardb.net/heroku_68b9e8d436b5c9e'
+# DATABASE_URL='mysql://b7dc1c0beff351:29c857b5@us-cdbr-iron-east-04.cleardb.net/heroku_68b9e8d436b5c9e'
 DATABASES = {
     'default': dj_database_url.config(
         default='DATABASE_URL',
