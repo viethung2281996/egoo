@@ -9,6 +9,8 @@ django-allauth = "*"
 werkzeug = "*"
 django-extensions = "*"
 djangorestframework-jwt = "*"
+gunicorn = "*"
+django-heroku = "*"
 
 [requires]
 python_version = "3.5"
