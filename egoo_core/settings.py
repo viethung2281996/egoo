@@ -144,8 +144,9 @@ WSGI_APPLICATION = 'egoo_core.wsgi.application'
 # }
 # DATABASE_URL='mysql://b7dc1c0beff351:29c857b5@us-cdbr-iron-east-04.cleardb.net/heroku_68b9e8d436b5c9e'
 db_from_env = dj_database_url.config(conn_max_age=600)
-db_from_env = dj_database_url.config()
+DATABASES = {}
 DATABASES['default'].update(db_from_env)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
