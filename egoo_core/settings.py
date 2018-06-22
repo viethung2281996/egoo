@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import datetime
+import dj_database_url
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -141,7 +143,9 @@ WSGI_APPLICATION = 'egoo_core.wsgi.application'
 
 DATABASE_URL='mysql://b7dc1c0beff351:29c857b5@us-cdbr-iron-east-04.cleardb.net/heroku_68b9e8d436b5c9e?reconnect=true'
 DATABASES = {
-    'default': DATABASE_URL,
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
 }
 
 
