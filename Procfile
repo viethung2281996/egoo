@@ -1,2 +1,2 @@
 
-web: gunicorn egoo-back.wsgi --log-file -
+web: gunicorn egoo_core.wsgi --log-file -
