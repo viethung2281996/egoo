@@ -1,2 +1,2 @@
 
-web: gunicorn egoo-back.wsgi --log-file -
+web: gunicorn app.wsgi --pythonpath app --log-file -
