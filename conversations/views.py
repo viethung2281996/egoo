@@ -14,20 +14,14 @@ from categories.models import Category
 #Create your views here.
 
 class ListConversation(generics.ListCreateAPIView):
-  authentication_classes = (SessionAuthentication, BasicAuthentication)
-  permission_classes = (IsAuthenticated,)
   queryset = Conversation.objects.all()
   serializer_class = serializers.ConversationSerializer
 
 class DetailConversation(generics.RetrieveUpdateDestroyAPIView):
-  authentication_classes = (SessionAuthentication, BasicAuthentication)
-  permission_classes = (IsAuthenticated,)
   queryset = Conversation.objects.all()
   serializer_class = serializers.ConversationSerializer
 
 class ListConversationInUnit(APIView):
-  authentication_classes = (SessionAuthentication, BasicAuthentication)
-  permission_classes = (IsAuthenticated,)
   def get(self, request, category_id, unit_id):
     try:
       category = Category.objects.get(id=category_id)

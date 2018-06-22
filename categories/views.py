@@ -6,13 +6,9 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 # Create your views here.
 
 class ListCategory(generics.ListCreateAPIView):
-  authentication_classes = (SessionAuthentication, BasicAuthentication)
-  permission_classes = (IsAuthenticated,)
   queryset = Category.objects.all()
   serializer_class = serializers.CategorySerializer
 
 class DetaiCategory(generics.RetrieveUpdateDestroyAPIView):
-  authentication_classes = (SessionAuthentication, BasicAuthentication)
-  permission_classes = (IsAuthenticated,)
   queryset = Category.objects.all()
   serializer_class = serializers.CategorySerializer

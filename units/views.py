@@ -11,20 +11,14 @@ from categories.models import Category
 # Create your views here.
 
 class ListUnit(generics.ListCreateAPIView):
-  authentication_classes = (SessionAuthentication, BasicAuthentication)
-  permission_classes = (IsAuthenticated,)
   queryset = Unit.objects.all()
   serializer_class = serializers.UnitSerializer
 
 class DetailUnit(generics.RetrieveUpdateDestroyAPIView):
-  pauthentication_classes = (SessionAuthentication, BasicAuthentication)
-  permission_classes = (IsAuthenticated,)
   queryset = Unit.objects.all()
   serializer_class = serializers.UnitSerializer
 
 class ListUnitInCategory(APIView):
-  authentication_classes = (SessionAuthentication, BasicAuthentication)
-  permission_classes = (IsAuthenticated,)
   def get(self, request, category_id):
     try:
       category = Category.objects.get(id=category_id)
