@@ -19,6 +19,6 @@ from .api_settings import API_VERSION
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path(API_VERSION, include('api.urls')),
 ]
