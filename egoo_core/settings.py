@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import datetime
-import dj_database_url
-import django_heroku
 
 
 
@@ -129,20 +127,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'egoo_core.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'egoo_core',
-#         'USER': 'root',
-#         'PASSWORD': 'root',
-#         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-#         'PORT': '3306',
-#     }
-# }
-# DATABASE_URL='mysql://b7dc1c0beff351:29c857b5@us-cdbr-iron-east-04.cleardb.net/heroku_68b9e8d436b5c9e'
 
 DATABASES = {
     'default': {
@@ -154,10 +138,6 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-
-db_from_env=dj_database_url.config()
-DATABASES['default'].update(db_from_env)
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -196,5 +176,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-# Activate Django-Heroku.
-django_heroku.settings(locals())
