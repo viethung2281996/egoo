@@ -17,7 +17,6 @@ class ConversationSerializer(serializers.ModelSerializer):
     model = Conversation
 
   def create(self, validated_data):
-    import pdb;pdb.set_trace()
     unit_id = validated_data.pop('unit_id')
     unit = Unit.objects.get(id=unit_id)
     conversation = Conversation.objects.create(unit=unit, **validated_data)

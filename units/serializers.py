@@ -17,7 +17,6 @@ class UnitSerializer(serializers.ModelSerializer):
   #     return unit
 
   def create(self, validated_data):
-    import pdb;pdb.set_trace()
     category_id = validated_data.pop('category_id')
     category = Category.objects.get(id=category_id)
     unit = Unit.objects.create(category=category, **validated_data)
