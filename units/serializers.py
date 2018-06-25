@@ -1,4 +1,4 @@
-from units.models import Unit
+from units.models import Unit, LEVEL_CHOICE
 from django.db import models
 from categories.serializers import CategorySerializer
 from categories.models import Category
@@ -6,15 +6,7 @@ from rest_framework import serializers
 
 class UnitSerializer(serializers.ModelSerializer):
   category_id = serializers.IntegerField()
-
-  # def create(self, validated_data):
-  #   unit = Unit.objects.create(
-  #       title = validated_data["title"],
-  #       order = validated_data["order"],
-  #     )
-   
-  #   if unit.save():
-  #     return unit
+  level = serializers.ChoiceField(choices=LEVEL_CHOICE)
 
   def create(self, validated_data):
     category_id = validated_data.pop('category_id')
@@ -27,6 +19,8 @@ class UnitSerializer(serializers.ModelSerializer):
       'id',
       'title',
       'order',
+      'level',
       'category_id',
       ]
     model = Unit
+

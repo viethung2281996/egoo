@@ -12,7 +12,9 @@ class ConversationSerializer(serializers.ModelSerializer):
       'image',
       'audio',
       'order',
-      'unit_id'
+      'unit_id',
+      'mp3',
+      'is_robot'
       )
     model = Conversation
 
