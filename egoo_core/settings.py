@@ -52,6 +52,7 @@ FUNCTION_APP = [
     'categories',
     'units',
     'conversations',
+    'notes',
 ]
 
 

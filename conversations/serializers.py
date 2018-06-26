@@ -1,10 +1,9 @@
 from rest_framework import serializers
-from units.serializers import UnitSerializer
 from units.models import Unit
 from conversations.models import Conversation
 
 class ConversationSerializer(serializers.ModelSerializer):
-  unit_id = serializers.IntegerField()
+  unit = serializers.PrimaryKeyRelatedField(many=False, queryset=Unit.objects.all())
   class Meta:
     fields = (
       'id',
@@ -12,14 +11,8 @@ class ConversationSerializer(serializers.ModelSerializer):
       'image',
       'audio',
       'order',
-      'unit_id',
-      'mp3',
-      'is_robot'
+      'unit',
+      'is_robot',
+      'recommend'
       )
     model = Conversation
-
-  def create(self, validated_data):
-    unit_id = validated_data.pop('unit_id')
-    unit = Unit.objects.get(id=unit_id)
-    conversation = Conversation.objects.create(unit=unit, **validated_data)
-    return conversation

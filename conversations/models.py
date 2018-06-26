@@ -5,10 +5,10 @@ from units.models import Unit
 class Conversation(models.Model):
   context = models.TextField(null=False, blank=False)
   image = models.TextField(null=False, blank=False)
-  mp3 = models.TextField(null=False, blank=False)
   audio = models.TextField(null=False, blank=False)
   order = models.IntegerField(null=False)
   is_robot = models.BooleanField(default=False)
+  recommend = models.CharField(max_length=20, blank=True, default='')
   unit = models.ForeignKey(
     Unit,
     on_delete=models.CASCADE,
