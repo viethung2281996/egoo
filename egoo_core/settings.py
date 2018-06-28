@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 
 ############## Application definition#########
-DJANGO_APP = [
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,18 +46,13 @@ DJANGO_APP = [
     'rest_framework.authtoken',
     'rest_auth',
     'rest_auth.registration',
-    'django_extensions'
-]
-
-FUNCTION_APP = [
+    'django_extensions',
     'api',
-    'categories',
+    'category',
     'units',
     'conversations',
+    'notes',
 ]
-
-
-INSTALLED_APPS = DJANGO_APP + FUNCTION_APP
 ###############################################
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -94,6 +89,10 @@ REST_FRAMEWORK = {
        ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
     ),
 }
 
@@ -176,3 +175,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFIELDS_DIR = (
+    os.path.join(BASE_DIR, "static"),
+    '/static/',
+    )
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'

@@ -17,8 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 from .api_settings import API_VERSION
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
+from django.conf.urls.static import static
+from . import settings
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path(API_VERSION, include('api.urls')),
-]
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
