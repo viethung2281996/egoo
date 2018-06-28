@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import datetime
-
+import dj_database_url
+import django_heroku
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -139,7 +140,9 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-
+django_heroku.settings(locals())
+db_from_env=dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
