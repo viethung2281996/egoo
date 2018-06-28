@@ -23,3 +23,4 @@ six==1.11.0
 urllib3==1.23
 dj_database_url
 whitenoise==3.3.1
+Pillow
