@@ -5,9 +5,10 @@ from django.urls import path, include
 from user.views import CreateUserView
 from rest_framework_jwt.views import refresh_jwt_token
 from units.views import ListUnit, DetailUnit, ListConversationInUnit, ListNoteInUnit
-from conversations.views import ListConversation, DetailConversation
+from conversations.views import ListConversation, DetailConversation, UploadImage, UploadAudio
 from categories.views import ListCategory, ListCategory, ListUnitInCategory
-from notes.views import ListNote, DetailNote
+from notes.views import ListNote, DetailNote, UploadAudio
+
 urlpatterns = [
     #authenticate url
     path('rest-auth/', include('rest_auth.urls')),
@@ -26,7 +27,10 @@ urlpatterns = [
 
     path('conversations/', ListConversation.as_view()),
     path('conversations/<int:pk>/', DetailConversation.as_view()),
+    path('conversations/<int:conversation_id>/image', UploadImage.as_view()),
+    path('conversations/<int:conversation_id>/audio', UploadAudio.as_view()),
 
     path('notes/', ListNote.as_view()),
     path('notes/<int:pk>/', DetailNote.as_view()),
+    path('notes/<int:note_id>/audio', UploadAudio.as_view()),
 ]

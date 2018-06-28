@@ -107,3 +107,5 @@ Pipfile.lock
 categories/migrations
 units/migrations
 conversations/migrations
+notes/migrations
+media/
