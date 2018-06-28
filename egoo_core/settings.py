@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 
 
 ############## Application definition#########
-DJANGO_APP = [
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,19 +44,13 @@ DJANGO_APP = [
     'rest_framework.authtoken',
     'rest_auth',
     'rest_auth.registration',
-    'django_extensions'
-]
-
-FUNCTION_APP = [
+    'django_extensions',
     'api',
-    'categories',
+    'category',
     'units',
     'conversations',
     'notes',
 ]
-
-
-INSTALLED_APPS = DJANGO_APP + FUNCTION_APP
 ###############################################
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

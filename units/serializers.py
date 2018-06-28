@@ -1,6 +1,6 @@
 from units.models import Unit, LEVEL_CHOICE
 from django.db import models
-from categories.models import Category
+from category.models import Category
 from notes.models import Note
 from rest_framework import serializers
 
