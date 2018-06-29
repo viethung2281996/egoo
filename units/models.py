@@ -1,5 +1,5 @@
 from django.db import models
-from category.models import Category
+from categories.models import Category
 #Create your models here.
 LEVEL_CHOICE = (
   ('Elementary', 'Elementary'),

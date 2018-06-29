@@ -6,7 +6,7 @@ from units.models import Unit
 from . import serializers
 from conversations.serializers import ConversationSerializer
 from notes.serializers import NoteSerializer
-from category.models import Category
+from categories.models import Category
 # Create your views here.
 
 class ListUnit(generics.ListCreateAPIView):

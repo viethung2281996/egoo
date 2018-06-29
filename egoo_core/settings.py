@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'django_extensions',
     'api',
-    'category',
+    'categories',
     'units',
     'conversations',
     'notes',

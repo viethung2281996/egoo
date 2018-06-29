@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from category.models import Category
+from categories.models import Category
 from django.db import models
 
 class CategorySerializer(serializers.ModelSerializer):

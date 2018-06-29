@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
-from category.models import Category
+from categories.models import Category
 from . import serializers
 from units.serializers import UnitSerializer
 # Create your views here.
