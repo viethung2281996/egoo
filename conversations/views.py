@@ -55,7 +55,6 @@ class ConversationUploadAudio(APIView):
     serializer = ConversationSerializer(conversation, data=data, partial=True)
     if serializer.is_valid():
       serializer.save()
-      import pdb;pdb.set_trace()
       return Response(serializer.data)
     else:
       response = {
