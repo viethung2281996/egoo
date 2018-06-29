@@ -4,8 +4,8 @@ from conversations.models import Conversation
 
 class ConversationSerializer(serializers.ModelSerializer):
   unit = serializers.PrimaryKeyRelatedField(many=False, queryset=Unit.objects.all())
-  image = serializers.ImageField(max_length=None, use_url=True, allow_empty_file=True, read_only=True)
-  audio = serializers.FileField(max_length=None, use_url=True, allow_empty_file=True, read_only=True)
+  image = serializers.ImageField(max_length=None, use_url=True, allow_empty_file=True, required=False)
+  audio = serializers.FileField(max_length=None, use_url=True, allow_empty_file=True, required=False)
   class Meta:
     fields = (
       'id',
