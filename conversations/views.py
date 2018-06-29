@@ -40,7 +40,7 @@ class UploadImage(APIView):
       return Response(response)
 
 @parser_classes((MultiPartParser, ))
-class UploadAudio(APIView):
+class ConversationUploadAudio(APIView):
   def post(self, request, conversation_id):
     try:
       conversation = Conversation.objects.get(id=conversation_id)
