@@ -29,7 +29,7 @@ SECRET_KEY = 'nir*hzy5$a@nmg+5n@7@5#1g!1bb7zbc33=6m&)(upcy#$+v)('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['www.eagletraining.win', '127.0.0.1']
 
 
 ############## Application definition#########
