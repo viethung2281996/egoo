@@ -29,7 +29,7 @@ SECRET_KEY = 'nir*hzy5$a@nmg+5n@7@5#1g!1bb7zbc33=6m&)(upcy#$+v)('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 ############## Application definition#########
@@ -64,8 +64,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 ############## Setting using for authentication ####################################
-#This is required otherwise it asks for email server
+##This is required otherwise it asks for email server#
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # ACCOUNT_EMAIL_REQUIRED = True
 # AUTHENTICATION_METHOD = 'EMAIL'
