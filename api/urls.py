@@ -4,9 +4,9 @@ from django.shortcuts import render
 from django.urls import path, include
 from user.views import CreateUserView
 from rest_framework_jwt.views import refresh_jwt_token
-from units.views import ListUnit, DetailUnit, ListConversationInUnit, ListNoteInUnit
+from units.views import ListUnit, DetailUnit, ListConversationInUnit, ListNoteInUnit, UnitUploadImage
 from conversations.views import ListConversation, DetailConversation, UploadImage, ConversationUploadAudio
-from categories.views import ListCategory, ListCategory, ListUnitInCategory
+from categories.views import ListCategory, ListCategory, ListUnitInCategory, CategoryUploadImage
 from notes.views import ListNote, DetailNote, UploadAudio
 
 urlpatterns = [
@@ -19,11 +19,13 @@ urlpatterns = [
     path('categories/', ListCategory.as_view()),
     path('categories/<int:pk>/', ListCategory.as_view()),
     path('categories/<int:category_id>/units/', ListUnitInCategory.as_view()),
+    path('categories/<int:category_id>/image', CategoryUploadImage.as_view()),
 
     path('units/', ListUnit.as_view()),
     path('units/<int:pk>/', DetailUnit.as_view()),
     path('categories/<int:category_id>/units/<int:unit_id>/conversations/', ListConversationInUnit.as_view()),
     path('categories/<int:category_id>/units/<int:unit_id>/notes/', ListNoteInUnit.as_view()),
+    path('units/<int:pk>/image', UnitUploadImage.as_view()),
 
     path('conversations/', ListConversation.as_view()),
     path('conversations/<int:pk>/', DetailConversation.as_view()),
