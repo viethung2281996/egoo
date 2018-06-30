@@ -12,9 +12,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import datetime
-import dj_database_url
-import django_heroku
-
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -33,7 +30,7 @@ ALLOWED_HOSTS = []
 
 
 ############## Application definition#########
-INSTALLED_APPS = [
+DJANGO_APP = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,13 +44,19 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
     'rest_auth.registration',
-    'django_extensions',
+    'django_extensions'
+]
+
+FUNCTION_APP = [
     'api',
     'categories',
     'units',
     'conversations',
     'notes',
 ]
+
+
+INSTALLED_APPS = DJANGO_APP + FUNCTION_APP
 ###############################################
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -127,6 +130,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'egoo_core.wsgi.application'
 
 
+# Database
+# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -138,9 +143,8 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-django_heroku.settings(locals())
-db_from_env=dj_database_url.config()
-DATABASES['default'].update(db_from_env)
+
+
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -183,7 +187,7 @@ STATICFIELDS_DIR = (
     os.path.join(BASE_DIR, "static"),
     '/static/',
     )
-FILES_DIR = os.path.abspath(os.path.join(BASE_DIR, '../'))
-MEDIA_ROOT = os.path.join(FILES_DIR, 'media')
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
