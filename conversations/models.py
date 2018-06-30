@@ -9,7 +9,7 @@ class Conversation(models.Model):
   audio = models.FileField(upload_to='conversations/audios/', null=True, storage=OverwriteStorage())
   order = models.IntegerField(null=False)
   is_robot = models.BooleanField(default=False)
-  recommend = models.CharField(max_length=20, blank=True, default='')
+  recommend = models.TextField(null=True, blank=True)
   unit = models.ForeignKey(
     Unit,
     on_delete=models.CASCADE,
