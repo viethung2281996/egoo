@@ -10,3 +10,27 @@ def response_message(status_code):
     if status_code:
         codes = element[status_code]
     return codes
+
+def add_url_serializer(request, serializer):
+    for i in serializer.data:
+        if i['image']:
+            i['image'] = request.get_host()+i['image']
+
+    return serializer
+
+
+def add_url_serializer_conversations(request, serializer):
+    for i in serializer.data:
+        if i['image']:
+            i['image'] = request.get_host()+i['image']
+        if i['audio']:
+            i['audio'] = request.get_host()+i['audio']
+
+    return serializer
+
+def add_url_serializer_notes(request, serializer):
+    for i in serializer.data:
+        if i['audio']:
+            i['audio'] = request.get_host()+i['audio']
+
+    return serializer
