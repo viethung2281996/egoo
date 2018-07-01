@@ -14,7 +14,7 @@ def response_message(status_code):
 def add_url_serializer(request, serializer):
     for i in serializer.data:
         if i['image']:
-            i['image'] = request.get_host()+i['image']
+            i['image'] = 'https://'+request.get_host()+i['image']
 
     return serializer
 
@@ -22,15 +22,15 @@ def add_url_serializer(request, serializer):
 def add_url_serializer_conversations(request, serializer):
     for i in serializer.data:
         if i['image']:
-            i['image'] = request.get_host()+i['image']
+            i['image'] = 'https://'+request.get_host()+i['image']
         if i['audio']:
-            i['audio'] = request.get_host()+i['audio']
+            i['audio'] = 'https://'+request.get_host()+i['audio']
 
     return serializer
 
 def add_url_serializer_notes(request, serializer):
     for i in serializer.data:
         if i['audio']:
-            i['audio'] = request.get_host()+i['audio']
+            i['audio'] = 'https://'+request.get_host()+i['audio']
 
     return serializer
