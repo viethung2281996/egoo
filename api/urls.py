@@ -25,7 +25,7 @@ urlpatterns = [
     path('units/<int:pk>/', DetailUnit.as_view()),
     path('categories/<int:category_id>/units/<int:unit_id>/conversations/', ListConversationInUnit.as_view()),
     path('categories/<int:category_id>/units/<int:unit_id>/notes/', ListNoteInUnit.as_view()),
-    path('units/<int:pk>/image', UnitUploadImage.as_view()),
+    path('units/<int:unit_id>/image', UnitUploadImage.as_view()),
 
     path('conversations/', ListConversation.as_view()),
     path('conversations/<int:pk>/', DetailConversation.as_view()),
