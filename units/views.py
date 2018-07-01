@@ -31,7 +31,7 @@ class ListConversationInUnit(APIView):
          "message": "Object doesn't exist"
       }
       return Response(response)
-    conversations = unit.list_conversation
+    conversations = unit.list_conversation.order_by('order')
     serializer = add_url_serializer_conversations(request, serializer=ConversationSerializer(conversations, many=True))
     return Response(serializer.data)
 
