@@ -6,7 +6,7 @@ from user.views import CreateUserView
 from rest_framework_jwt.views import refresh_jwt_token
 from units.views import ListUnit, DetailUnit, ListConversationInUnit, ListNoteInUnit, UnitUploadImage
 from conversations.views import ListConversation, DetailConversation, UploadImage, ConversationUploadAudio
-from categories.views import ListCategory, ListCategory, ListUnitInCategory, CategoryUploadImage
+from categories.views import ListCategory, DetaiCategory, ListUnitInCategory, CategoryUploadImage
 from notes.views import ListNote, DetailNote, UploadAudio
 
 urlpatterns = [
@@ -17,7 +17,7 @@ urlpatterns = [
 
     #app url
     path('categories/', ListCategory.as_view()),
-    path('categories/<int:pk>/', ListCategory.as_view()),
+    path('categories/<int:pk>/', DetaiCategory.as_view()),
     path('categories/<int:category_id>/units/', ListUnitInCategory.as_view()),
     path('categories/<int:category_id>/image', CategoryUploadImage.as_view()),
 
