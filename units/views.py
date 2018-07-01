@@ -9,7 +9,7 @@ from units.serializers import UnitSerializer
 from conversations.serializers import ConversationSerializer
 from notes.serializers import NoteSerializer
 from categories.models import Category
-from egoo_core.utils import add_url_serializer
+from egoo_core.utils import add_url_serializer, add_url_serializer_conversations, add_url_serializer_notes
 # Create your views here.
 
 class ListUnit(generics.ListCreateAPIView):
@@ -31,7 +31,7 @@ class ListConversationInUnit(APIView):
       }
       return Response(response)
     conversations = unit.list_conversation
-    serializer = add_url_serializer(request, serializer=ConversationSerializer(conversations, many=True))
+    serializer = add_url_serializer_conversations(request, serializer=ConversationSerializer(conversations, many=True))
     return Response(serializer.data)
 
 class ListNoteInUnit(APIView):
@@ -45,7 +45,7 @@ class ListNoteInUnit(APIView):
       }
       return Response(response)
     notes = unit.note_set.all()
-    serializer = add_url_serializer(request, serializer=NoteSerializer(notes, many=True))
+    serializer = add_url_serializer_notes(request, serializer=NoteSerializer(notes, many=True))
     return Response(serializer.data)
 
 @parser_classes((MultiPartParser, ))
