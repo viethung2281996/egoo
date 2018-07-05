@@ -70,7 +70,6 @@ class ConversationUploadAudio(APIView):
     uploader = CloudinaryUploader(file=file,public_id=file_name,folder="conversations/audios", resource_type="video")
     r = uploader.upload()
     data['audio'] = r['secure_url']
-
     serializer = ConversationSerializer(conversation, data=data, partial=True)
     if serializer.is_valid():
       serializer.save()
