@@ -1,6 +1,7 @@
 import dj_database_url
 import django_heroku
 import cloudinary
+import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATABASES = {
