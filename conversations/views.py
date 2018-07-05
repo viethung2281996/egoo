@@ -6,6 +6,7 @@ from . import serializers
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import parser_classes
+from egoo_core.cloudinary import CloudinaryUploader
 #Create your views here.
 
 class ListConversation(generics.ListCreateAPIView):
@@ -27,8 +28,17 @@ class UploadImage(APIView):
       }
       return Response(response)
     data = {}
-    image_file = request.data['image']
-    data['image'] = image_file
+    file = request.FILES['image']
+
+    file_name = conversation.init_file_name(file)
+    if file_name == "":
+      response = {
+         "message": "file name error"
+      }
+      return Response(response)
+    uploader = CloudinaryUploader(file=file,public_id=file_name,folder="conversations/images")
+    r = uploader.upload()
+    data['image'] = r['secure_url']
     serializer = ConversationSerializer(conversation, data=data, partial=True)
     if serializer.is_valid():
       serializer.save()
@@ -50,8 +60,17 @@ class ConversationUploadAudio(APIView):
       }
       return Response(response)
     data = {}
-    audio_file = request.data['audio']
-    data['audio'] = audio_file
+    file = request.data['audio']
+    file_name = conversation.init_file_name(file)
+    if file_name == "":
+      response = {
+         "message": "file name error"
+      }
+      return Response(response)
+    uploader = CloudinaryUploader(file=file,public_id=file_name,folder="conversations/audios", resource_type="video")
+    r = uploader.upload()
+    data['audio'] = r['secure_url']
+
     serializer = ConversationSerializer(conversation, data=data, partial=True)
     if serializer.is_valid():
       serializer.save()

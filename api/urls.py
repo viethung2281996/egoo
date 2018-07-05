@@ -17,22 +17,22 @@ urlpatterns = [
 
     #app url
     path('categories/', ListCategory.as_view()),
-    path('categories/<int:pk>/', DetaiCategory.as_view()),
-    path('categories/<int:category_id>/units/', ListUnitInCategory.as_view()),
-    path('categories/<int:category_id>/image', CategoryUploadImage.as_view()),
+    path('categories/<uuid:pk>/', ListCategory.as_view()),
+    path('categories/<uuid:category_id>/image', CategoryUploadImage.as_view()),
 
     path('units/', ListUnit.as_view()),
-    path('units/<int:pk>/', DetailUnit.as_view()),
-    path('categories/<int:category_id>/units/<int:unit_id>/conversations/', ListConversationInUnit.as_view()),
-    path('categories/<int:category_id>/units/<int:unit_id>/notes/', ListNoteInUnit.as_view()),
-    path('units/<int:unit_id>/image', UnitUploadImage.as_view()),
+    path('units/<uuid:pk>/', DetailUnit.as_view()),
+    path('units/<uuid:unit_id>/image', UnitUploadImage.as_view()),
+    path('categories/<uuid:category_id>/units/', ListUnitInCategory.as_view()),
 
     path('conversations/', ListConversation.as_view()),
-    path('conversations/<int:pk>/', DetailConversation.as_view()),
-    path('conversations/<int:conversation_id>/image', UploadImage.as_view()),
-    path('conversations/<int:conversation_id>/audio', ConversationUploadAudio.as_view()),
+    path('conversations/<uuid:pk>/', DetailConversation.as_view()),
+    path('categories/<uuid:category_id>/units/<uuid:unit_id>/conversations/', ListConversationInUnit.as_view()),
+    path('conversations/<uuid:conversation_id>/image', UploadImage.as_view()),
+    path('conversations/<uuid:conversation_id>/audio', ConversationUploadAudio.as_view()),
 
     path('notes/', ListNote.as_view()),
-    path('notes/<int:pk>/', DetailNote.as_view()),
-    path('notes/<int:note_id>/audio', UploadAudio.as_view()),
+    path('notes/<uuid:pk>/', DetailNote.as_view()),
+    path('notes/<uuid:note_id>/audio', UploadAudio.as_view()),
+    path('categories/<uuid:category_id>/units/<uuid:unit_id>/notes/', ListNoteInUnit.as_view()),
 ]
