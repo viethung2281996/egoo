@@ -10,6 +10,7 @@ from conversations.serializers import ConversationSerializer
 from notes.serializers import NoteSerializer
 from categories.models import Category
 from egoo_core.utils import add_url_serializer, add_url_serializer_conversations, add_url_serializer_notes
+from egoo_core.cloudinary import CloudinaryUploader
 # Create your views here.
 
 class ListUnit(generics.ListCreateAPIView):
@@ -59,8 +60,17 @@ class UnitUploadImage(APIView):
       }
       return Response(response)
     data = {}
-    image_file = request.data['image']
-    data['image'] = image_file
+    file = request.data['image']
+    file_name = unit.init_file_name(file)
+    if file_name == "":
+      response = {
+         "message": "file name error"
+      }
+      return Response(response)
+    uploader = CloudinaryUploader(file=file,public_id=file_name,folder="units/images")
+    r = uploader.upload()
+    data['image'] = r['secure_url']
+
     serializer = UnitSerializer(unit, data=data, partial=True)
     if serializer.is_valid():
       serializer.save()

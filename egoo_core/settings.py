@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import datetime
-
+import socket
+import cloudinary
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     'units',
     'conversations',
     'notes',
+    'cloudinary'
 ]
 ###############################################
 MIDDLEWARE = [
@@ -123,21 +125,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'egoo_core.wsgi.application'
 
-
-# Database
+if socket.gethostbyname(socket.gethostname()) == "localhost" or "127.0.0.1" or "127.0.1.1'":
+    from egoo_core.config_local import *
+else:
+    from egoo_core.config_server import *
+# Database 
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'egoo_core',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators

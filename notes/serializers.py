@@ -4,7 +4,6 @@ from units.models import Unit
 
 class NoteSerializer(serializers.ModelSerializer):
   units = serializers.PrimaryKeyRelatedField(many=True, queryset=Unit.objects.all())
-  audio = serializers.FileField(max_length=None, use_url=True, allow_empty_file=True, required=False)
 
   class Meta:
     fields = (
