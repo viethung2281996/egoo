@@ -2,6 +2,7 @@ import dj_database_url
 import django_heroku
 import cloudinary
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATABASES = {
   'default': {
     'ENGINE': 'django.db.backends.mysql',
