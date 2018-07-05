@@ -137,7 +137,7 @@ if socket.gethostbyname(socket.gethostname()) == "localhost" or "127.0.0.1" or "
     print(socket.gethostbyname(socket.gethostname()))
 else:
     from egoo_core.config_server import *
-    print()socket.gethostbyname(socket.gethostname())
+    print(socket.gethostbyname(socket.gethostname()))
 # Database 
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
