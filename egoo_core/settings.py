@@ -132,7 +132,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'egoo_core.wsgi.application'
 
-if socket.gethostbyname(socket.gethostname()) == "localhost" or "127.0.0.1" or "127.0.1.1'":
+if socket.gethostbyname(socket.gethostname()) not in  ["localhost", "127.0.0.1", "127.0.1.1"]:
     from egoo_core.config_local import *
     print(socket.gethostbyname(socket.gethostname()))
 else:
