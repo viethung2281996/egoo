@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import parser_classes
 from egoo_core.cloudinary import CloudinaryUploader
+from categories.models import Category
 #Create your views here.
 
 class ListConversation(generics.ListCreateAPIView):
@@ -16,6 +17,20 @@ class ListConversation(generics.ListCreateAPIView):
 class DetailConversation(generics.RetrieveUpdateDestroyAPIView):
   queryset = Conversation.objects.all()
   serializer_class = serializers.ConversationSerializer
+
+class ListConversationInUnit(APIView):
+  def get(self, request, category_id, unit_id):
+    try:
+      category = Category.objects.get(id=category_id)
+      unit = category.list_unit.get(id=unit_id)
+    except ObjectDoesNotExist:
+      response = {
+         "message": "Object doesn't exist"
+      }
+      return Response(response)
+    conversations = unit.list_conversation.order_by('order')
+    serializer=ConversationSerializer(conversations, many=True)
+    return Response(serializer.data)
 
 @parser_classes((MultiPartParser, ))
 class UploadImage(APIView):

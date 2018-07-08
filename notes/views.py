@@ -1,25 +1,41 @@
 from rest_framework import generics
 from rest_framework.response import Response
-from . import models, serializers
 from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import parser_classes
 from egoo_core.cloudinary import CloudinaryUploader
+from notes.serializers import NoteSerializer
+from notes.models import Note
+from categories.models import Category
 # Create your views here.
 
 class ListNote(generics.ListCreateAPIView):
-  queryset = models.Note.objects.all()
-  serializer_class = serializers.NoteSerializer
+  queryset = Note.objects.all()
+  serializer_class = NoteSerializer
 
 class DetailNote(generics.RetrieveUpdateDestroyAPIView):
-  queryset = models.Note.objects.all()
-  serializer_class = serializers.NoteSerializer
+  queryset = Note.objects.all()
+  serializer_class = NoteSerializer
+
+class ListNoteInUnit(APIView):
+  def get(self, request, category_id, unit_id):
+    try:
+      category = Category.objects.get(id=category_id)
+      unit = category.list_unit.get(id=unit_id)
+    except ObjectDoesNotExist:
+      response = {
+         "message": "Object doesn't exist"
+      }
+      return Response(response)
+    notes = unit.note_set.all()
+    serializer=NoteSerializer(notes, many=True)
+    return Response(serializer.data)
 
 @parser_classes((MultiPartParser, ))
 class UploadAudio(APIView):
   def post(self, request, note_id):
     try:
-      note = models.Note.objects.get(id=note_id)
+      note = Note.objects.get(id=note_id)
     except ObjectDoesNotExist:
       response = {
          "message": "Object doesn't exist"
@@ -36,7 +52,7 @@ class UploadAudio(APIView):
     uploader = CloudinaryUploader(file=file,public_id=file_name,folder="notes/audios", resource_type="video")
     r = uploader.upload()
     data['audio'] = r['secure_url']
-    serializer = serializers.NoteSerializer(note, data=data, partial=True)
+    serializer = NoteSerializer(note, data=data, partial=True)
     if serializer.is_valid():
       serializer.save()
       return Response(serializer.data)

@@ -4,10 +4,10 @@ from django.shortcuts import render
 from django.urls import path, include
 from user.views import CreateUserView
 from rest_framework_jwt.views import refresh_jwt_token
-from units.views import ListUnit, DetailUnit, ListConversationInUnit, ListNoteInUnit, UnitUploadImage
-from conversations.views import ListConversation, DetailConversation, UploadImage, ConversationUploadAudio
-from categories.views import ListCategory, DetaiCategory, ListUnitInCategory, CategoryUploadImage
-from notes.views import ListNote, DetailNote, UploadAudio
+from units.views import ListUnit, DetailUnit, UnitUploadImage, ListUnitInCategory
+from conversations.views import ListConversation, DetailConversation, UploadImage, ConversationUploadAudio, ListConversationInUnit
+from categories.views import ListCategory, DetaiCategory, CategoryUploadImage
+from notes.views import ListNote, DetailNote, UploadAudio, ListNoteInUnit
 
 urlpatterns = [
     #authenticate url
@@ -17,7 +17,7 @@ urlpatterns = [
 
     #app url
     path('categories/', ListCategory.as_view()),
-    path('categories/<uuid:pk>/', ListCategory.as_view()),
+    path('categories/<uuid:pk>/', DetaiCategory.as_view()),
     path('categories/<uuid:category_id>/image', CategoryUploadImage.as_view()),
 
     path('units/', ListUnit.as_view()),

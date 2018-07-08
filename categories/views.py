@@ -7,7 +7,6 @@ from rest_framework.decorators import parser_classes
 from categories.models import Category
 from categories.serializers import CategorySerializer
 from units.serializers import UnitSerializer
-# from egoo_core.utils import add_url_serializer
 from egoo_core.cloudinary import CloudinaryUploader
 # Create your views here.
 
@@ -15,24 +14,12 @@ class ListCategory(generics.ListCreateAPIView):
   queryset = Category.objects.all()
   serializer_class = CategorySerializer
 
+  def get_queryset(self):
+    return Category.objects.order_by('order')
+
 class DetaiCategory(generics.RetrieveUpdateDestroyAPIView):
   queryset = Category.objects.all()
   serializer_class = CategorySerializer
-
-class ListUnitInCategory(APIView):
-  def get(self, request, category_id):
-    try:
-      category = Category.objects.get(id=category_id)
-
-    except ObjectDoesNotExist:
-      response = {
-         "message": "Object doesn't exist"
-      }
-      return Response(response)
-    units = category.list_unit
-    # serializer = add_url_serializer(request, serializer=UnitSerializer(units, many=True))
-    serializer=UnitSerializer(units, many=True)
-    return Response(serializer.data)
 
 @parser_classes((MultiPartParser, ))
 class CategoryUploadImage(APIView):

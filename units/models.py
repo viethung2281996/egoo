@@ -13,7 +13,7 @@ LEVEL_CHOICE = (
 class Unit(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   title = models.CharField(null=False, max_length=100, unique=True)
-  order = models.IntegerField(null=False, unique=True)
+  order = models.IntegerField(null=False)
   image = models.TextField(null=True, blank=True)
   level = models.CharField(null=False, max_length=12, choices=LEVEL_CHOICE, default='Elementary')
   category = models.ForeignKey(

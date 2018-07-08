@@ -9,7 +9,7 @@ class Conversation(models.Model):
   context = models.TextField(null=False, blank=False)
   image = models.TextField(null=True, blank=True)
   audio = models.TextField(null=True, blank=True)
-  order = models.IntegerField(null=False, unique=True)
+  order = models.IntegerField(null=False)
   is_robot = models.BooleanField(default=False)
   recommend = models.TextField(null=True, blank=True)
   unit = models.ForeignKey(
