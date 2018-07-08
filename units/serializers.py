@@ -10,8 +10,9 @@ class UnitSerializer(serializers.ModelSerializer):
   note_set = serializers.PrimaryKeyRelatedField(many=True, queryset=Note.objects.all())
 
   def validate(self, data):
-    list_order_in_category = map(lambda x: x.order, data['category'].list_unit.all())
-    if data['order'] in list_order_in_category:
+    if self.instance is None:
+      list_order_in_category = map(lambda x: x.order, data['category'].list_unit.all())
+      if data['order'] in list_order_in_category:
         raise serializers.ValidationError("Order of unit must unique in category")
     return data
 

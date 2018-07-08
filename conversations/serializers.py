@@ -6,8 +6,9 @@ class ConversationSerializer(serializers.ModelSerializer):
   unit = serializers.PrimaryKeyRelatedField(many=False, queryset=Unit.objects.all())
   
   def validate(self, data):
-    list_order_in_unit = map(lambda x: x.order, data['unit'].list_conversation.all())
-    if data['order'] in list_order_in_unit:
+    if self.instance is None:
+      list_order_in_unit = map(lambda x: x.order, data['unit'].list_conversation.all())
+      if data['order'] in list_order_in_unit:
         raise serializers.ValidationError("Order of conversations must unique in unit")
     return data
 
