@@ -8,7 +8,6 @@ from units.models import Unit
 from units.serializers import UnitSerializer
 from categories.models import Category
 from egoo_core.cloudinary import CloudinaryUploader
-
 # Create your views here.
 
 class ListUnit(generics.ListCreateAPIView):
