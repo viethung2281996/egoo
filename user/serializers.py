@@ -8,13 +8,15 @@ class UserSerializer(serializers.ModelSerializer):
     is_superuser = serializers.IntegerField(read_only='true')
     is_staff = serializers.IntegerField(read_only='true')
     is_active = serializers.IntegerField(read_only='true')
-    last_login = serializers.IntegerField(read_only='true')
-    date_joined = serializers.IntegerField(read_only='true')
-    
+    last_login = serializers.DateTimeField(read_only='true')
+    date_joined = serializers.DateTimeField(read_only='true')
+
     def create(self, validated_data):
         user = get_user_model().objects.create(
             username = validated_data['username'],
-            email = validated_data['email']
+            email = validated_data['email'],
+            first_name = validated_data['first_name'],
+            last_name = validated_data['last_name'],
         )
         user.set_password(validated_data['password'])
         user.save()
