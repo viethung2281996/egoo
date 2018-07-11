@@ -12,7 +12,7 @@ from notes.views import ListNote, DetailNote, UploadAudio, ListNoteInUnit
 urlpatterns = [
     #authenticate url
     path('rest-auth/', include('rest_auth.urls')),
-    #path('rest-auth/registration/', CreateUserView.as_view(), name='user_register'),
+    path('rest-auth/registration/', CreateUserView.as_view(), name='user_register'),
     path('refresh-token/', refresh_jwt_token),
 
     #app url
