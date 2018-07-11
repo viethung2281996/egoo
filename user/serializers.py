@@ -5,7 +5,12 @@ from django.contrib.auth import get_user_model
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only='true')
     re_password = serializers.CharField(write_only='true')
-
+    is_superuser = serializers.IntegerField(read_only='true')
+    is_staff = serializers.IntegerField(read_only='true')
+    is_active = serializers.IntegerField(read_only='true')
+    last_login = serializers.IntegerField(read_only='true')
+    date_joined = serializers.IntegerField(read_only='true')
+    
     def create(self, validated_data):
         user = get_user_model().objects.create(
             username = validated_data['username'],
