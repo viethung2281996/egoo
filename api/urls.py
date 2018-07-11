@@ -8,6 +8,7 @@ from units.views import ListUnit, DetailUnit, UnitUploadImage, ListUnitInCategor
 from conversations.views import ListConversation, DetailConversation, UploadImage, ConversationUploadAudio, ListConversationInUnit
 from categories.views import ListCategory, DetaiCategory, CategoryUploadImage
 from notes.views import ListNote, DetailNote, UploadAudio, ListNoteInUnit
+from user.views import ListUser, DetailUser
 
 urlpatterns = [
     #authenticate url
@@ -35,4 +36,7 @@ urlpatterns = [
     path('notes/<uuid:pk>/', DetailNote.as_view()),
     path('notes/<uuid:note_id>/audio', UploadAudio.as_view()),
     path('categories/<uuid:category_id>/units/<uuid:unit_id>/notes/', ListNoteInUnit.as_view()),
+
+    path('users/', ListUser.as_view()),
+    path('users/<int:pk>/', DetailUser.as_view()),
 ]
