@@ -13,7 +13,7 @@ from egoo_core.cloudinary import CloudinaryUploader
 class ListUnit(generics.ListCreateAPIView):
   queryset = Unit.objects.all()
   serializer_class = UnitSerializer
-
+  
 class DetailUnit(generics.RetrieveUpdateDestroyAPIView):
   queryset = Unit.objects.all()
   serializer_class = UnitSerializer
