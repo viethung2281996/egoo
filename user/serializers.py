@@ -26,4 +26,4 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
         'id', 'username', 'email', 'password', 're_password',
         'is_superuser', 'is_staff', 'is_active', 'last_login',
-        'date_joined', 'first_name', 'last_name')
+        'date_joined')
