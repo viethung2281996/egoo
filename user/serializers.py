@@ -16,8 +16,6 @@ class UserSerializer(serializers.ModelSerializer):
         user = get_user_model().objects.create(
             username = validated_data['username'],
             email = validated_data['email'],
-            first_name = validated_data['first_name'],
-            last_name = validated_data['last_name'],
         )
         user.set_password(validated_data['password'])
         user.save()
@@ -27,5 +25,5 @@ class UserSerializer(serializers.ModelSerializer):
         model = get_user_model()
         fields = (
         'id', 'username', 'email', 'password', 're_password',
-        'is_superuser', 'first_name', 'last_name', 'is_staff',
+        'is_superuser', 'is_staff',
         'is_active', 'last_login', 'date_joined')
