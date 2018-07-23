@@ -23,7 +23,7 @@ class ListUser(generics.ListCreateAPIView):
     email = self.request.query_params.get('email', None)
     if email is not None:
       return queryset.filter(email=email)
-    return None
+    return queryset
 
 class DetailUser(generics.RetrieveUpdateDestroyAPIView):
   queryset = get_user_model().objects.all()
