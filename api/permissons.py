@@ -6,4 +6,4 @@ class UserPermission(permissions.BasePermission):
     if request.method == 'GET':
       return request.user.is_authenticated
     else:
-      return request.user.is_staff
+      return request.user.is_superuser
