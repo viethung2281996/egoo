@@ -1,9 +1,10 @@
 from rest_framework import generics
 from rest_framework.response import Response
+from api.permissons import UserPermission
+from api.views import BaseAPIView
 from conversations.models import Conversation
 from conversations.serializers import ConversationSerializer
 from . import serializers
-from rest_framework.views import APIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import parser_classes
 from egoo_core.cloudinary import CloudinaryUploader
@@ -13,12 +14,14 @@ from categories.models import Category
 class ListConversation(generics.ListCreateAPIView):
   queryset = Conversation.objects.all()
   serializer_class = serializers.ConversationSerializer
+  permission_classes = (UserPermission,)
 
 class DetailConversation(generics.RetrieveUpdateDestroyAPIView):
   queryset = Conversation.objects.all()
   serializer_class = serializers.ConversationSerializer
+  permission_classes = (UserPermission,)
 
-class ListConversationInUnit(APIView):
+class ListConversationInUnit(BaseAPIView):
   def get(self, request, category_id, unit_id):
     try:
       category = Category.objects.get(id=category_id)
@@ -33,7 +36,7 @@ class ListConversationInUnit(APIView):
     return Response(serializer.data)
 
 @parser_classes((MultiPartParser, ))
-class UploadImage(APIView):
+class UploadImage(BaseAPIView):
   def post(self, request, conversation_id):
     try:
       conversation = Conversation.objects.get(id=conversation_id)
@@ -65,7 +68,7 @@ class UploadImage(APIView):
       return Response(response)
 
 @parser_classes((MultiPartParser, ))
-class ConversationUploadAudio(APIView):
+class ConversationUploadAudio(BaseAPIView):
   def post(self, request, conversation_id):
     try:
       conversation = Conversation.objects.get(id=conversation_id)

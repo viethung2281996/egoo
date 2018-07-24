@@ -1,6 +1,7 @@
 from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from api.permissons import UserPermission
+from api.views import BaseAPIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import parser_classes
 from egoo_core.cloudinary import CloudinaryUploader
@@ -12,12 +13,14 @@ from categories.models import Category
 class ListNote(generics.ListCreateAPIView):
   queryset = Note.objects.all()
   serializer_class = NoteSerializer
+  permission_classes = (UserPermission,)
 
 class DetailNote(generics.RetrieveUpdateDestroyAPIView):
   queryset = Note.objects.all()
   serializer_class = NoteSerializer
+  permission_classes = (UserPermission,)
 
-class ListNoteInUnit(APIView):
+class ListNoteInUnit(BaseAPIView):
   def get(self, request, category_id, unit_id):
     try:
       category = Category.objects.get(id=category_id)
@@ -32,7 +35,7 @@ class ListNoteInUnit(APIView):
     return Response(serializer.data)
 
 @parser_classes((MultiPartParser, ))
-class UploadAudio(APIView):
+class UploadAudio(BaseAPIView):
   def post(self, request, note_id):
     try:
       note = Note.objects.get(id=note_id)

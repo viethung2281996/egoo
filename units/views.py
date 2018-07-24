@@ -1,6 +1,7 @@
 from rest_framework import generics, permissions,mixins
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from api.permissons import UserPermission
+from api.views import BaseAPIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import parser_classes
 from django.core.exceptions import ObjectDoesNotExist
@@ -13,12 +14,14 @@ from egoo_core.cloudinary import CloudinaryUploader
 class ListUnit(generics.ListCreateAPIView):
   queryset = Unit.objects.all()
   serializer_class = UnitSerializer
+  permission_classes = (UserPermission,)
   
 class DetailUnit(generics.RetrieveUpdateDestroyAPIView):
   queryset = Unit.objects.all()
   serializer_class = UnitSerializer
+  permission_classes = (UserPermission,)
 
-class ListUnitInCategory(APIView):
+class ListUnitInCategory(BaseAPIView):
   def get(self, request, category_id):
     try:
       category = Category.objects.get(id=category_id)
@@ -33,7 +36,7 @@ class ListUnitInCategory(APIView):
     return Response(serializer.data)
 
 @parser_classes((MultiPartParser, ))
-class UnitUploadImage(APIView):
+class UnitUploadImage(BaseAPIView):
   def post(self, request, unit_id):
     try:
       unit = Unit.objects.get(id=unit_id)

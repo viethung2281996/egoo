@@ -1,6 +1,7 @@
 from rest_framework import generics
-from rest_framework.views import APIView
 from rest_framework.response import Response
+from api.permissons import UserPermission
+from api.views import BaseAPIView
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import parser_classes
@@ -14,6 +15,7 @@ from egoo_core.utils import StandradResponse
 class ListCategory(generics.ListCreateAPIView):
   queryset = Category.objects.all()
   serializer_class = CategorySerializer
+  permission_classes = (UserPermission,)
 
   def get_queryset(self):
     return Category.objects.order_by('order')
@@ -21,9 +23,10 @@ class ListCategory(generics.ListCreateAPIView):
 class DetaiCategory(generics.RetrieveUpdateDestroyAPIView):
   queryset = Category.objects.all()
   serializer_class = CategorySerializer
+  permission_classes = (UserPermission,)
 
 @parser_classes((MultiPartParser, ))
-class CategoryUploadImage(APIView):
+class CategoryUploadImage(BaseAPIView):
   def post(self, request, category_id):
     try:
       category = Category.objects.get(id=category_id)
