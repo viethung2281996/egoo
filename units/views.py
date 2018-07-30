@@ -6,6 +6,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import parser_classes
 from django.core.exceptions import ObjectDoesNotExist
 from units.models import Unit
+from speakers.models import Speaker
 from units.serializers import UnitSerializer
 from categories.models import Category
 from egoo_core.cloudinary import CloudinaryUploader
@@ -33,7 +34,22 @@ class ListUnitInCategory(BaseAPIView):
       return Response(response)
     units = category.list_unit.order_by('order')
     serializer=UnitSerializer(units, many=True)
-    return Response(serializer.data)
+
+    units = self.get_max_score_unit(request, serializer.data)
+    return Response(units)
+
+  @staticmethod
+  def get_max_score_unit(request, units):
+    user_id = request.user.id
+    for unit in units:
+      score = 0
+      speaker_array = Speaker.objects.filter(user=user_id, unit=unit['id'])
+      score_array = list(map(lambda x: x.score, speaker_array))
+      if len(score_array) > 0:
+        score = max(score_array)
+      unit['max_score'] = score
+
+    return units
 
 @parser_classes((MultiPartParser, ))
 class UnitUploadImage(BaseAPIView):
