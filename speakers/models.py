@@ -1,8 +1,9 @@
+from api.models import BaseModel
 from django.db import models
 from django.contrib.auth import get_user_model
 from units.models import Unit
 # Create your models here.
-class Speaker(models.Model):
+class Speaker(BaseModel):
   user = models.ForeignKey(
     get_user_model(),
     on_delete=models.CASCADE,
