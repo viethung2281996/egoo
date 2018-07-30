@@ -102,9 +102,4 @@ ENV/
 # mypy
 .mypy_cache/
 pyenv/
-categories/migrations
-units/migrations
-conversations/migrations
-notes/migrations
-speakers/migrations
 media/

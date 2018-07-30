@@ -19,7 +19,7 @@ class ListUser(generics.ListCreateAPIView):
   serializer_class = UserSerializer
 
   def get_queryset(self):
-    queryset = get_user_model().objects.all()
+    queryset = get_user_model().objects.all().order_by('-date_joined')
     email = self.request.query_params.get('email', None)
     if email is not None:
       return queryset.filter(email=email)
