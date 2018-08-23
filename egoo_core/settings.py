@@ -58,6 +58,7 @@ FUNCTION_APP = [
     'conversations',
     'notes',
     'speakers',
+    'guides',
 ]
 
 
@@ -108,7 +109,7 @@ REST_FRAMEWORK = {
 
 JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600*12),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600*12*365),
 }
 # Enables django-rest-auth to use JWT tokens instead of regular tokens.
 REST_USE_JWT = True
