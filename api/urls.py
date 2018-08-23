@@ -10,6 +10,7 @@ from categories.views import ListCategory, DetaiCategory, CategoryUploadImage
 from notes.views import ListNote, DetailNote, UploadAudio, ListNoteInUnit
 from speakers.views import ListSpeaker, DetailSpeaker
 from user.views import ListUser, DetailUser
+from guides.views import ListGuide, DetailGuide, GuideOfUnit, GuideUploadImage, GuideUploadVideo
 
 urlpatterns = [
     #authenticate url
@@ -40,6 +41,12 @@ urlpatterns = [
 
     path('speakers/', ListSpeaker.as_view()),
     path('speakers/<int:pk>/', DetailSpeaker.as_view()),
+
+    path('guides/', ListGuide.as_view()),
+    path('guides/<uuid:pk>/', DetailGuide.as_view()),
+    path('categories/<uuid:category_id>/units/<uuid:unit_id>/guide/', GuideOfUnit.as_view()),
+    path('guides/<uuid:guide_id>/image', GuideUploadImage.as_view()),
+    path('guides/<uuid:guide_id>/video', GuideUploadVideo.as_view()),
 
     path('users/', ListUser.as_view()),
     path('users/<int:pk>/', DetailUser.as_view()),
