@@ -32,7 +32,12 @@ class GuideOfUnit(BaseAPIView):
          "message": "Object doesn't exist"
       }
       return Response(response)
-    guide = unit.guide
+
+    try:
+      guide = unit.guide
+    except Exception as e:
+      return Response({})
+
     serializer = GuideSerializer(guide)
     return Response(serializer.data)
 
