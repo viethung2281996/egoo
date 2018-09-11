@@ -7,9 +7,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import parser_classes
 from categories.models import Category
 from categories.serializers import CategorySerializer
-from units.serializers import UnitSerializer
 from egoo_core.cloudinary import CloudinaryUploader
-from egoo_core.utils import StandradResponse
 # Create your views here.
 
 class ListCategory(generics.ListCreateAPIView):
@@ -55,3 +53,20 @@ class CategoryUploadImage(BaseAPIView):
          "message": "Upload file failed"
       }
       return Response(response)
+
+class GetTotalScore(BaseAPIView):
+  def get(self, request):
+    user_id = self.request.user.id
+
+    categories = Category.objects.all()
+    category_score = []
+
+    for category in categories:
+      data = {}
+      data['id'] = str(category.id)
+      data['name'] = category.name
+      data['total_score'] = category.get_total_score_of_user(user_id)
+
+      category_score.append(data)
+
+    return Response(category_score)

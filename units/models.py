@@ -32,3 +32,13 @@ class Unit(models.Model):
       return ""
     else:
       return "{0}_{1}".format("unit", self.id)
+
+  def get_max_score_of_user(self, user_id):
+    score = 0
+    speaker_array = self.list_speaker.filter(user=user_id)
+    score_array = list(map(lambda x: x.score, speaker_array))
+
+    if len(score_array) > 0:
+      score = max(score_array)
+
+    return score

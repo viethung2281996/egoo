@@ -6,7 +6,7 @@ from user.views import CreateUserView
 from rest_framework_jwt.views import refresh_jwt_token
 from units.views import ListUnit, DetailUnit, UnitUploadImage, ListUnitInCategory
 from conversations.views import ListConversation, DetailConversation, UploadImage, ConversationUploadAudio, ListConversationInUnit
-from categories.views import ListCategory, DetaiCategory, CategoryUploadImage
+from categories.views import ListCategory, DetaiCategory, CategoryUploadImage, GetTotalScore
 from notes.views import ListNote, DetailNote, UploadAudio, ListNoteInUnit
 from speakers.views import ListSpeaker, DetailSpeaker
 from user.views import ListUser, DetailUser
@@ -22,6 +22,7 @@ urlpatterns = [
     path('categories/', ListCategory.as_view()),
     path('categories/<uuid:pk>/', DetaiCategory.as_view()),
     path('categories/<uuid:category_id>/image', CategoryUploadImage.as_view()),
+    path('categories/total_score/', GetTotalScore.as_view()),
 
     path('units/', ListUnit.as_view()),
     path('units/<uuid:pk>/', DetailUnit.as_view()),

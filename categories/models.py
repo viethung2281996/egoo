@@ -1,7 +1,6 @@
 import uuid
 from django.db import models
 from api.models import BaseModel
-from egoo_core.storage import OverwriteStorage
 
 # Create your models here.
 class Category(BaseModel):
@@ -18,3 +17,14 @@ class Category(BaseModel):
       return ""
     else:
       return "{0}_{1}".format("category", self.id)
+
+  def get_unit_ids(self):
+    units = self.list_unit.all()
+    return list(map(lambda unit: str(unit.id), units))
+
+  def get_total_score_of_user(self, user_id):
+    units = self.list_unit.all()
+    #get score array with unit array
+    scores = list(map(lambda unit: unit.get_max_score_of_user(user_id), units))
+
+    return sum(scores)

@@ -24,4 +24,3 @@ class ListSpeaker(generics.ListCreateAPIView):
 class DetailSpeaker(generics.RetrieveUpdateDestroyAPIView):
   queryset = Speaker.objects.all()
   serializer_class = SpeakerSerializer
-
