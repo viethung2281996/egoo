@@ -84,17 +84,13 @@ class GuideUploadVideo(BaseAPIView):
       }
       return Response(response)
     data = {}
-    file = request.FILES['video']
-
-    file_name = guide.init_file_name(file)
-    if file_name == "":
+    video_url = request.data.get('video_url', None)
+    if video_url is None:
       response = {
-         "message": "file name error"
+         "message": "Upload file failed"
       }
       return Response(response)
-    uploader = CloudinaryUploader(file=file,public_id=file_name,folder="guides/videos", resource_type="video")
-    r = uploader.upload()
-    data['video'] = r['secure_url']
+    data['video'] = video_url
     serializer = GuideSerializer(guide, data=data, partial=True)
     if serializer.is_valid():
       serializer.save()
