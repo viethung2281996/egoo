@@ -38,15 +38,15 @@ class UserUploadAvatar(APIView):
     try:
       user = get_user_model().objects.get(id=pk)
       custom_information = user.custominformation
+    except CustomInformation.DoesNotExist:
+      custom_information = CustomInformation(user=user)
+      custom_information.save()
     except ObjectDoesNotExist:
       response = {
          "message": "Object doesn't exist"
       }
       return Response(response)
-    except CustomInformation.DoesNotExist:
-      custom_information = CustomInformation(user=user)
-      custom_information.save()
-
+      
     data = {}
     file = request.data['image']
     file_name = custom_information.init_file_name(file)
