@@ -59,6 +59,7 @@ FUNCTION_APP = [
     'notes',
     'speakers',
     'guides',
+    'user',
 ]
 
 
@@ -158,7 +159,7 @@ django_heroku.settings(locals())
 db_from_env=dj_database_url.config()
 DATABASES['default'].update(db_from_env)
 
-
+# AUTH_USER_MODEL = 'user.User'
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 

@@ -9,7 +9,7 @@ from conversations.views import ListConversation, DetailConversation, UploadImag
 from categories.views import ListCategory, DetaiCategory, CategoryUploadImage, GetTotalScore
 from notes.views import ListNote, DetailNote, UploadAudio, ListNoteInUnit
 from speakers.views import ListSpeaker, DetailSpeaker
-from user.views import ListUser, DetailUser
+from user.views import ListUser, DetailUser, UserUploadAvatar
 from guides.views import ListGuide, DetailGuide, GuideOfUnit, GuideUploadImage, GuideUploadVideo
 
 urlpatterns = [
@@ -51,4 +51,5 @@ urlpatterns = [
 
     path('users/', ListUser.as_view()),
     path('users/<int:pk>/', DetailUser.as_view()),
+    path('users/<int:pk>/avatar', UserUploadAvatar.as_view()),
 ]
