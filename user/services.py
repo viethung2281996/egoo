@@ -2,6 +2,7 @@ from categories.models import ActivationCode
 from django.contrib.auth import get_user_model
 from user.models import Ticket
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils import timezone
 import datetime
 
 class UserActiveCode():
@@ -26,14 +27,14 @@ class UserActiveCode():
   def get_activate_code(self, code):
     try:
       activation_code = ActivationCode.objects.filter(code=code).first()
-      if activation_code.status == UserActivedCode.CODE_USED:
+      if activation_code is None:
+        self.messages.append('Code are not available')
+        raise e
+      if activation_code.status == UserActiveCode.CODE_USED:
         self.messages.append('Code are used')
         raise Exception()
       else:
         return activation_code
-    except ObjectDoesNotExist as e:
-      self.messages.append('Code are not available')
-      raise e
     except Exception as e:
       self.errors.append(repr(e))
       raise e
@@ -51,7 +52,7 @@ class UserActiveCode():
 
   def active_code(self, activation_code):
     user = get_user_model().objects.get(pk=self.user_id)
-    start_time = datetime.datetime.now()
+    start_time = datetime.datetime.now(tz=timezone.utc)
     end_time = None
     if activation_code.time is not None:
       end_time = start_time + activation_code.time
@@ -61,5 +62,5 @@ class UserActiveCode():
                     start=start_time,
                     end=end_time)
     ticket.save()
-    activation_code.status = UserActivedCode.CODE_USED
+    activation_code.status = UserActiveCode.CODE_USED
     activation_code.save()

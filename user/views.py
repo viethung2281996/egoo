@@ -68,7 +68,7 @@ class UserUploadAvatar(APIView):
       }
       return Response(response)
 
-class UserActiveCode(APIView):
+class UserActiveCodeView(APIView):
   def post(self, request):
     data = request.data
     code = data['code']

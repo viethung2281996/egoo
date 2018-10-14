@@ -23,11 +23,11 @@ class CustomInformation(models.Model):
 class Ticket(BaseModel):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   status = models.CharField(null=False, max_length=20, choices=STATUS_CHOICE, default='Active')
-  user = models.OneToOneField(
+  user = models.ForeignKey(
       User,
       on_delete=models.CASCADE,
     )
-  category = models.OneToOneField(
+  category = models.ForeignKey(
       Category,
       on_delete=models.CASCADE,
     )
