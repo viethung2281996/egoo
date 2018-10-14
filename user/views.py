@@ -79,6 +79,6 @@ class UserActiveCodeView(APIView):
       response = {
         'message': message
       }
-      return Response(message, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+      return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     else:
       return Response(status=status.HTTP_200_OK)
