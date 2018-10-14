@@ -1,13 +1,16 @@
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.response import Response
 from api.permissons import UserPermission
-from api.views import BaseAPIView
+from api.views import BaseAPIView, AdminAPIView
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import parser_classes
-from categories.models import Category
-from categories.serializers import CategorySerializer
+from categories.models import Category, ActivationCode
+from user.models import Ticket
+from categories.serializers import CategorySerializer, ActivationCodeSerializer
 from egoo_core.cloudinary import CloudinaryUploader
+from categories.services import ActivationCodeGenerator
+import datetime
 # Create your views here.
 
 class ListCategory(generics.ListCreateAPIView):
@@ -17,6 +20,30 @@ class ListCategory(generics.ListCreateAPIView):
 
   def get_queryset(self):
     return Category.objects.order_by('order')
+
+  def get(self, request):
+    serializer = CategorySerializer(Category.objects.all(), many=True)
+    categories = serializer.data
+    len_categories = len(categories)
+    if request.user.is_superuser:
+      for i in range(0, len_categories):
+        categories[i]['has_permission'] = True  
+    else:
+      for i in range(0, len_categories):
+        if categories[i]['type'] == 'Free':
+          categories[i]['has_permission'] = True
+        else:
+          ticket = Ticket.objects.filter(user=request.user, category__id=categories[i]['id'], status='Active').first()
+          if ticket is not None:
+            if ticket.end is None or ticket.end < datetime.datetime.now():
+              categories[i]['has_permission'] = True
+            else:
+              ticket.status = 'Expired'
+              ticket.save()
+              categories[i]['has_permission'] = False
+          else:
+            categories[i]['has_permission'] = False
+    return Response(categories)
 
 class DetaiCategory(generics.RetrieveUpdateDestroyAPIView):
   queryset = Category.objects.all()
@@ -70,3 +97,29 @@ class GetTotalScore(BaseAPIView):
       category_score.append(data)
 
     return Response(category_score)
+
+class CategoryActivationCode(AdminAPIView):
+  def get(self, request, category_id):
+    try:
+      category = Category.objects.get(id=category_id)
+    except ObjectDoesNotExist:
+      response = {
+         "message": "Object doesn't exist"
+      }
+      return Response(response)
+    activation_codes = category.activation_codes
+    serializer = ActivationCodeSerializer(activation_codes, many=True)
+    return Response(serializer.data)
+
+class AdminGenerateCode(AdminAPIView):
+  def post(self, request, category_id):
+    data = request.data
+    quantity = data['quantity']
+    time = data['time']
+    type = data['type']
+    generator = ActivationCodeGenerator(category_id, quantity, time, type)
+    result = generator.generate_actication_code()
+    if result:
+      return Response(status=status.HTTP_200_OK)
+    else:
+      return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)

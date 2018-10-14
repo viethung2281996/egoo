@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from .serializers import UserSerializer, CustomInformationSerializer
-from rest_framework import filters, generics, exceptions
+from rest_framework import filters, generics, exceptions, status
 from rest_framework.generics import CreateAPIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
@@ -11,7 +11,7 @@ from .models import CustomInformation
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from egoo_core.cloudinary import CloudinaryUploader
-
+from user.services import UserActiveCode
 
 class CreateUserView(CreateAPIView):
     model = get_user_model()
@@ -67,3 +67,18 @@ class UserUploadAvatar(APIView):
          "message": "Upload file failed"
       }
       return Response(response)
+
+class UserActiveCode(APIView):
+  def post(self, request):
+    data = request.data
+    code = data['code']
+    service = UserActiveCode(request.user.id, code)
+    result = service.process()
+    if result == False:
+      message = service.messages[0]
+      response = {
+        'messages': messages
+      }
+      return Response(messages, status, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    else:
+      return Response(status=status.HTTP_200_OK)
