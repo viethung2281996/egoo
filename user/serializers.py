@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-from .models import CustomInformation
+from .models import CustomInformation, Ticket
 from rest_framework.validators import UniqueValidator
 
 class CustomInformationSerializer(serializers.ModelSerializer):
@@ -42,3 +42,14 @@ class UserSerializer(serializers.ModelSerializer):
         'id', 'username', 'email', 'password', 're_password',
         'is_superuser', 'is_staff', 'is_active', 'last_login',
         'date_joined', 'custominformation')
+
+class TicketSerializer(serializers.ModelSerializer):
+
+    class Meta():
+        model = Ticket
+        fields = (
+            'status',
+            'start',
+            'end',
+            'category_id'
+            )

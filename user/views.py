@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
-from .serializers import UserSerializer, CustomInformationSerializer
+from .serializers import UserSerializer, CustomInformationSerializer, TicketSerializer
 from rest_framework import filters, generics, exceptions, status
 from rest_framework.generics import CreateAPIView
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -82,3 +82,31 @@ class UserActiveCodeView(APIView):
       return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
     else:
       return Response(status=status.HTTP_200_OK)
+
+class AdminActiveCodeView(APIView):
+  def post(self, request, pk):
+    data = request.data
+    code = data['code']
+    service = UserActiveCode(pk, code)
+    result = service.process()
+    if result == False:
+      message = service.messages[0]
+      response = {
+        'message': message
+      }
+      return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    else:
+      return Response(status=status.HTTP_200_OK)
+
+class UserTicketsView(APIView):
+  def get(self, request, pk):
+    try:
+      user = get_user_model().objects.get(id=pk)
+      tickets = user.ticket_set.all()
+      serializer = TicketSerializer(tickets, many=True)
+      return Response(serializer.data)
+    except ObjectDoesNotExist:
+      response = {
+         "message": "Object doesn't exist"
+      }
+      return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
