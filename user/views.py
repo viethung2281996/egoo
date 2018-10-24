@@ -8,6 +8,8 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.decorators import parser_classes
 from .models import CustomInformation
+from categories.models import Category
+from api.views import BaseAPIView, AdminAPIView
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from egoo_core.cloudinary import CloudinaryUploader
@@ -31,6 +33,23 @@ class ListUser(generics.ListCreateAPIView):
 class DetailUser(generics.RetrieveUpdateDestroyAPIView):
   queryset = get_user_model().objects.all()
   serializer_class = UserSerializer
+
+  def destroy(self, request, pk):
+    if not request.user.is_superuser:
+      response = {
+         "message": "Permissions not allow"
+      }
+      return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    else:
+      try:
+        user = get_user_model().objects.get(pk=pk)
+        self.perform_destroy(user)
+      except ObjectDoesNotExist:
+        response = {
+         "message": "Object doesn't exist"
+        }
+        return Response(response)
+      return Response(status=status.HTTP_204_NO_CONTENT)
 
 @parser_classes((MultiPartParser, ))
 class UserUploadAvatar(APIView):
@@ -83,7 +102,7 @@ class UserActiveCodeView(APIView):
     else:
       return Response(status=status.HTTP_200_OK)
 
-class AdminActiveCodeView(APIView):
+class AdminActiveCodeView(AdminAPIView):
   def post(self, request, pk):
     data = request.data
     code = data['code']
@@ -98,13 +117,43 @@ class AdminActiveCodeView(APIView):
     else:
       return Response(status=status.HTTP_200_OK)
 
-class UserTicketsView(APIView):
+class UserTicketsView(AdminAPIView):
   def get(self, request, pk):
     try:
       user = get_user_model().objects.get(id=pk)
       tickets = user.ticket_set.all()
       serializer = TicketSerializer(tickets, many=True)
       return Response(serializer.data)
+    except ObjectDoesNotExist:
+      response = {
+         "message": "Object doesn't exist"
+      }
+      return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+class UserScoresView(AdminAPIView):
+  def get(self, request, pk):
+    try:
+      user = get_user_model().objects.get(id=pk)
+      units = Unit.objects.all().order_by('category_id')
+    except ObjectDoesNotExist:
+      response = {
+         "message": "Object doesn't exist"
+      }
+      return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+class GetTotalScore(AdminAPIView):
+  def get(self, request, pk):
+    try:
+      user = get_user_model().objects.get(id=pk)
+      categories = Category.objects.all()
+      category_score = []
+      for category in categories:
+        data = {}
+        data['id'] = str(category.id)
+        data['name'] = category.name
+        data['total_score'] = category.get_total_score_of_user(pk)
+        category_score.append(data)
+      return Response(category_score)
     except ObjectDoesNotExist:
       response = {
          "message": "Object doesn't exist"
