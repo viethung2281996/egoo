@@ -141,7 +141,7 @@ class UserScoresView(AdminAPIView):
       }
       return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-class GetTotalScore(AdminAPIView):
+class AdminGetTotalScore(AdminAPIView):
   def get(self, request, pk):
     try:
       user = get_user_model().objects.get(id=pk)

@@ -81,7 +81,7 @@ class CategoryUploadImage(BaseAPIView):
       }
       return Response(response)
 
-class GetTotalScore(BaseAPIView):
+class UserGetTotalScore(BaseAPIView):
   def get(self, request):
     user_id = self.request.user.id
 
