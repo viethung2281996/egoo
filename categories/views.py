@@ -36,7 +36,7 @@ class ListCategory(generics.ListCreateAPIView):
         else:
           ticket = Ticket.objects.filter(user=request.user, category__id=categories[i]['id'], status='Active').first()
           if ticket is not None:
-            if ticket.end is None or ticket.end < datetime.datetime.now(tz=timezone.utc):
+            if ticket.end is None or ticket.end > datetime.datetime.now(tz=timezone.utc):
               categories[i]['has_permission'] = True
             else:
               ticket.status = 'Expired'
