@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 from user.models import Ticket
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
+from units.models import Unit
+from categories.models import Category
 import datetime
 
 class UserActiveCode():
@@ -64,3 +66,22 @@ class UserActiveCode():
     ticket.save()
     activation_code.status = UserActiveCode.CODE_USED
     activation_code.save()
+
+class GetUserScoreUnit():
+  def __init__(self, user_id):
+    self.user_id = user_id
+
+  def get_scores(self):
+    result = []
+    units = Unit.objects.all().order_by('category_id')
+    categories = Category.objects.all()
+    categories_dict = {}
+    for category in categories:
+      categories_dict[category.id] = category.name
+    for unit in units:
+        data = {}
+        data['category'] = categories_dict[unit.category_id]
+        data['unit'] = unit.title
+        data['score'] = unit.get_max_score_of_user(self.user_id)
+        result.append(data)
+    return result

@@ -9,11 +9,12 @@ from rest_framework.response import Response
 from rest_framework.decorators import parser_classes
 from .models import CustomInformation
 from categories.models import Category
+from units.models import Unit
 from api.views import BaseAPIView, AdminAPIView
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from egoo_core.cloudinary import CloudinaryUploader
-from user.services import UserActiveCode
+from user.services import UserActiveCode, GetUserScoreUnit
 
 class CreateUserView(CreateAPIView):
     model = get_user_model()
@@ -159,3 +160,20 @@ class AdminGetTotalScore(AdminAPIView):
          "message": "Object doesn't exist"
       }
       return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+class AdminGetTotalScoreUnit(AdminAPIView):
+  def get(self, request, pk):
+    try:
+      user = get_user_model().objects.get(id=pk)
+      getUserScoreUnit = GetUserScoreUnit(pk)
+      result = getUserScoreUnit.get_scores()
+      return Response(result)
+    except ObjectDoesNotExist:
+      response = {
+         "message": "Object doesn't exist"
+      }
+    except Exception as e:
+      response = {
+         "message": "Some thing went wrong"
+      }
+    return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
