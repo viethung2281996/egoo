@@ -177,3 +177,16 @@ class AdminGetTotalScoreUnit(AdminAPIView):
          "message": "Some thing went wrong"
       }
     return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+class ExportDataUserView(AdminAPIView):
+
+  def get(self, request):
+    users = get_user_model().objects.all()
+    categories = Category.objects.all()
+    result = []
+    for user in users:
+      user_data = UserSerializer(user, many=False).data
+      for category in categories:
+        user_data[str(category.id)] = category.get_total_score_of_user(user.id)
+      result.append(user_data)
+    return Response(result)
