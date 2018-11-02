@@ -2,6 +2,7 @@
 import dj_database_url
 import django_heroku
 from egoo_core.settings import INSTALLED_APPS
+import os
 
 django_heroku.settings(locals())
 db_from_env=dj_database_url.config()
