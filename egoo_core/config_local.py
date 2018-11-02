@@ -1,4 +1,5 @@
 import cloudinary
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -16,3 +17,10 @@ cloudinary.config(
   api_key = '968886895255698',  
   api_secret = 'RvrscTeNAfWtshM-ftDpclOFF5I',  
 )
+
+BROKER_URL = 'amqp://localhost'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'

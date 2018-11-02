@@ -209,12 +209,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
 
-BROKER_URL = 'amqp://localhost'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-
-CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 from egoo_core.celery_scheduler import *
 
 import djcelery
