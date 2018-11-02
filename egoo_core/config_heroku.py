@@ -5,6 +5,7 @@ django_heroku.settings(locals())
 db_from_env=dj_database_url.config()
 DATABASES['default'].update(db_from_env)
 
+BROKER_URL = 'amqp://rsazgrjr:fOJOG3vMKf3dJqj3oMTOwyuaGdt0xHQd@toad.rmq.cloudamqp.com/rsazgrjr'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
