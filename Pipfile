@@ -33,6 +33,8 @@ django-storages = "*"
 whitenoise = "==3.3.1"
 pillow = "*"
 cloudinary = "*"
+pip = "*"
+celery = "*"
 
 [requires]
 python_version = "3.5"
