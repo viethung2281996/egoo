@@ -146,9 +146,6 @@ else:
 # Database 
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-import djcelery
-djcelery.setup_loader()
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -212,5 +209,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
 
-from egoo_core.celery_scheduler import *
+import djcelery
+djcelery.setup_loader()
 
+from egoo_core.celery_scheduler import *
