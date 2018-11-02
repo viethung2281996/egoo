@@ -1,7 +1,9 @@
 import datetime
 import csv
+import zlib
 from egoo_core.celery import app
 from categories.models import Category
+from user.models import UserData
 from django.contrib.auth import get_user_model
 from .serializers import UserSerializer
 
@@ -41,3 +43,17 @@ def exportCSV(users):
     writer.writeheader()
     for user in users:
       writer.writerow(user)
+
+  file_name = 'user_data.csv'
+  with open('export/user_data.csv', 'rb') as f:
+    content = f.read()
+  compress_content = zlib.compress(content)
+  file = UserData.objects.filter(file_name=file_name)
+  if len(file) == 0:
+    user_data = UserData.objects.create(file_name=file_name, content=compress_content)
+    user_data.save()
+  else:
+    user_data=file[0]
+    user_data.update(content=compress_content)
+    user_data.save()
+

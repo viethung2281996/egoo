@@ -11,11 +11,13 @@ from rest_framework.decorators import parser_classes
 from .models import CustomInformation
 from categories.models import Category
 from units.models import Unit
+from user.models import UserData
 from api.views import BaseAPIView, AdminAPIView
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from egoo_core.cloudinary import CloudinaryUploader
 from user.services import UserActiveCode, GetUserScoreUnit
+import zlib
 
 class CreateUserView(CreateAPIView):
     model = get_user_model()
@@ -181,9 +183,15 @@ class AdminGetTotalScoreUnit(AdminAPIView):
 
 class ExportDataUserView(AdminAPIView):
   def get(self, request):
-    file_path = 'export/user_data.csv'
-    file_name = file_path.split('/')[1]
-    with open(file_path, 'rb') as myfile:
-      response = HttpResponse(myfile, content_type='text/csv')
-      response['Content-Disposition'] = 'attachment; filename={}'.format(file_name)
-      return response
+    files = UserData.objects.filter(file_name='user_data.csv')
+    if len(files) == 0:
+      response = {
+         "message": "Some thing went wrong"
+      }
+      return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    file = files[0]
+    file_name = file.file_name
+    content = zlib.decompress(file.content)
+    response = HttpResponse(content, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename={}'.format(file_name)
+    return response

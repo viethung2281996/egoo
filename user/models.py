@@ -40,3 +40,8 @@ class Ticket(BaseModel):
   
   class Meta:
     unique_together = ('user', 'category', 'activation_code')
+
+class UserData(BaseModel):
+  id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+  file_name = models.CharField(max_length=100, blank=False, null=False)
+  content = models.BinaryField()
