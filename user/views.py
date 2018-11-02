@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from .serializers import UserSerializer, CustomInformationSerializer, TicketSerializer
@@ -179,14 +180,10 @@ class AdminGetTotalScoreUnit(AdminAPIView):
     return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 class ExportDataUserView(AdminAPIView):
-
   def get(self, request):
-    users = get_user_model().objects.all()
-    categories = Category.objects.all()
-    result = []
-    for user in users:
-      user_data = UserSerializer(user, many=False).data
-      for category in categories:
-        user_data[str(category.id)] = category.get_total_score_of_user(user.id)
-      result.append(user_data)
-    return Response(result)
+    file_path = 'export/user_data.csv'
+    file_name = file_path.split('/')[1]
+    with open(file_path, 'rb') as myfile:
+      response = HttpResponse(myfile, content_type='text/csv')
+      response['Content-Disposition'] = 'attachment; filename={}'.format(file_name)
+      return response
