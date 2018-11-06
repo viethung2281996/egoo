@@ -54,6 +54,6 @@ def exportCSV(users):
     user_data.save()
   else:
     user_data=file[0]
-    user_data.update(content=compress_content)
+    user_data.content=compress_content
     user_data.save()
 
