@@ -13,7 +13,7 @@ def exportUserDataTask():
     exportCSV(users)
 
 def getUserData():
-  users = get_user_model().objects.all()
+  users = get_user_model().objects.all().order_by('date_joined')
   categories = Category.objects.all().order_by('created_at')
   result = []
   for user in users:
