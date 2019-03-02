@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from api.permissons import UserPermission
 from categories.models import Category
 from user.models import Ticket
-from categories.serializers import CategorySerializer
+from .serializers import CategorySerializer
 from api.views import BaseAPIView
 import datetime
 # Create your views here.
