@@ -6,10 +6,10 @@ from user.views import CreateUserView
 from rest_framework_jwt.views import refresh_jwt_token
 from units.views import ListUnit, DetailUnit, UnitUploadImage, ListUnitInCategory
 from conversations.views import ListConversation, DetailConversation, UploadImage, ConversationUploadAudio, ListConversationInUnit
-from categories.views import ListCategory, DetaiCategory, CategoryUploadImage, GetTotalScore, CategoryActivationCode, AdminGenerateCode
+from categories.views import ListCategory, DetaiCategory, CategoryUploadImage, UserGetTotalScore, CategoryActivationCode, AdminGenerateCode
 from notes.views import ListNote, DetailNote, UploadAudio, ListNoteInUnit
 from speakers.views import ListSpeaker, DetailSpeaker
-from user.views import ListUser, DetailUser, UserUploadAvatar, UserActiveCodeView, UserTicketsView, AdminActiveCodeView, GetTotalScore
+from user.views import ListUser, DetailUser, UserUploadAvatar, UserActiveCodeView, UserTicketsView, AdminActiveCodeView, AdminGetTotalScore, AdminGetTotalScoreUnit, ExportDataUserView
 from guides.views import ListGuide, DetailGuide, GuideOfUnit, GuideUploadImage, GuideUploadVideo
 
 urlpatterns = [
@@ -22,7 +22,7 @@ urlpatterns = [
     path('categories/', ListCategory.as_view()),
     path('categories/<uuid:pk>/', DetaiCategory.as_view()),
     path('categories/<uuid:category_id>/image', CategoryUploadImage.as_view()),
-    path('categories/total_score/', GetTotalScore.as_view()),
+    path('categories/total_score/', UserGetTotalScore.as_view()),
     path('categories/<uuid:category_id>/codes', CategoryActivationCode.as_view()),
     path('categories/<uuid:category_id>/generate_code', AdminGenerateCode.as_view()),
 
@@ -57,5 +57,7 @@ urlpatterns = [
     path('users/<int:pk>/tickets', UserTicketsView.as_view()),
     path('users/code', UserActiveCodeView.as_view()),
     path('users/<int:pk>/admin_active_code', AdminActiveCodeView.as_view()),
-    path('users/<int:pk>/scores', GetTotalScore.as_view()),
+    path('users/<int:pk>/scores', AdminGetTotalScore.as_view()),
+    path('users/<int:pk>/unit-score', AdminGetTotalScoreUnit.as_view()),
+    path('users/export-data-users', ExportDataUserView.as_view()),
 ]

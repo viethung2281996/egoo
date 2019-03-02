@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
 from .serializers import UserSerializer, CustomInformationSerializer, TicketSerializer
@@ -9,11 +10,14 @@ from rest_framework.response import Response
 from rest_framework.decorators import parser_classes
 from .models import CustomInformation
 from categories.models import Category
+from units.models import Unit
+from user.models import UserData
 from api.views import BaseAPIView, AdminAPIView
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from egoo_core.cloudinary import CloudinaryUploader
-from user.services import UserActiveCode
+from user.services import UserActiveCode, GetUserScoreUnit
+import zlib
 
 class CreateUserView(CreateAPIView):
     model = get_user_model()
@@ -141,7 +145,7 @@ class UserScoresView(AdminAPIView):
       }
       return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-class GetTotalScore(AdminAPIView):
+class AdminGetTotalScore(AdminAPIView):
   def get(self, request, pk):
     try:
       user = get_user_model().objects.get(id=pk)
@@ -159,3 +163,35 @@ class GetTotalScore(AdminAPIView):
          "message": "Object doesn't exist"
       }
       return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+class AdminGetTotalScoreUnit(AdminAPIView):
+  def get(self, request, pk):
+    try:
+      user = get_user_model().objects.get(id=pk)
+      getUserScoreUnit = GetUserScoreUnit(pk)
+      result = getUserScoreUnit.get_scores()
+      return Response(result)
+    except ObjectDoesNotExist:
+      response = {
+         "message": "Object doesn't exist"
+      }
+    except Exception as e:
+      response = {
+         "message": "Some thing went wrong"
+      }
+    return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+class ExportDataUserView(AdminAPIView):
+  def get(self, request):
+    files = UserData.objects.filter(file_name='user_data.csv')
+    if len(files) == 0:
+      response = {
+         "message": "Some thing went wrong"
+      }
+      return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    file = files[0]
+    file_name = file.file_name
+    content = zlib.decompress(file.content)
+    response = HttpResponse(content, content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename={}'.format(file_name)
+    return response

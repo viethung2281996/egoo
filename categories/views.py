@@ -7,6 +7,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import parser_classes
 from categories.models import Category, ActivationCode
 from user.models import Ticket
+from django.utils import timezone
 from categories.serializers import CategorySerializer, ActivationCodeSerializer
 from egoo_core.cloudinary import CloudinaryUploader
 from categories.services import ActivationCodeGenerator
@@ -35,7 +36,7 @@ class ListCategory(generics.ListCreateAPIView):
         else:
           ticket = Ticket.objects.filter(user=request.user, category__id=categories[i]['id'], status='Active').first()
           if ticket is not None:
-            if ticket.end is None or ticket.end < datetime.datetime.now():
+            if ticket.end is None or ticket.end > datetime.datetime.now(tz=timezone.utc):
               categories[i]['has_permission'] = True
             else:
               ticket.status = 'Expired'
@@ -81,7 +82,7 @@ class CategoryUploadImage(BaseAPIView):
       }
       return Response(response)
 
-class GetTotalScore(BaseAPIView):
+class UserGetTotalScore(BaseAPIView):
   def get(self, request):
     user_id = self.request.user.id
 

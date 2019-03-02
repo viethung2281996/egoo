@@ -16,6 +16,7 @@ import socket
 import cloudinary
 import dj_database_url
 import django_heroku
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -34,6 +35,7 @@ ALLOWED_HOSTS = ['www.eagletraining.win', '127.0.0.1', 'localhost']
 
 ############## Application definition#########
 DJANGO_APP = [
+    'djcelery',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -192,3 +194,8 @@ STATICFIELDS_DIR = (
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
+
+import djcelery
+djcelery.setup_loader()
+
+from egoo_core.celery_scheduler import *
