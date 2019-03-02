@@ -199,3 +199,7 @@ import djcelery
 djcelery.setup_loader()
 
 from egoo_core.celery_scheduler import *
+
+django_heroku.settings(locals())
+db_from_env=dj_database_url.config()
+DATABASES['default'].update(db_from_env)
