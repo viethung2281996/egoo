@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .api_settings import API_VERSION
+from .api_settings import API_VERSION_V1, API_VERSION_V2
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 from django.conf.urls.static import static
 from . import settings
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path(API_VERSION, include('api.urls')),
-]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path(API_VERSION_V1, include('api.urls')),
+    path(API_VERSION_V2, include('api.v2.urls')),
+]

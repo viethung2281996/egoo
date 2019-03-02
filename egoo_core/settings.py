@@ -29,7 +29,7 @@ SECRET_KEY = 'nir*hzy5$a@nmg+5n@7@5#1g!1bb7zbc33=6m&)(upcy#$+v)('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.eagletraining.win', '127.0.0.1']
+ALLOWED_HOSTS = ['www.eagletraining.win', '127.0.0.1', 'localhost']
 
 
 ############## Application definition#########
@@ -136,28 +136,14 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'egoo_core.wsgi.application'
-
-if socket.gethostbyname(socket.gethostname()) in  ["localhost", "127.0.0.1", "127.0.1.1"]:
+if socket.gethostbyname(socket.gethostname()) in  ["localhost", "127.0.0.1", "127.0.1.1", "192.168.1.13"]:
+    print(socket.gethostbyname(socket.gethostname()))
     from egoo_core.config_local import *
 else:
     from egoo_core.config_server import *
 # Database 
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'egoo_core',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
-    }
-}
-
-django_heroku.settings(locals())
-db_from_env=dj_database_url.config()
-DATABASES['default'].update(db_from_env)
 
 # AUTH_USER_MODEL = 'user.User'
 # Password validation
