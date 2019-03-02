@@ -22,10 +22,6 @@ DATABASES = {
     }
 }
 
-django_heroku.settings(locals())
-db_from_env=dj_database_url.config()
-DATABASES['default'].update(db_from_env)
-
 # Config to connect message queue
 CELERY_RESULT_SERIALIZER = 'json'
 
