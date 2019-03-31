@@ -11,6 +11,12 @@ from notes.views import ListNote, DetailNote, UploadAudio, ListNoteInUnit
 from speakers.views import ListSpeaker, DetailSpeaker
 from user.views import ListUser, DetailUser, UserUploadAvatar, UserActiveCodeView, UserTicketsView, AdminActiveCodeView, AdminGetTotalScore, AdminGetTotalScoreUnit, ExportDataUserView
 from guides.views import ListGuide, DetailGuide, GuideOfUnit, GuideUploadImage, GuideUploadVideo
+from exsercises.views import ListListenAndReadExsercise, DetailListenAndReadExsercise, ListenAndReadExserciseUploadImage, \
+ListenAndReadExserciseUploadAudio, ListChoseAnswerExsercise, DetailChoseAnswerExsercise, ListRewriteSentenceExsercise, \
+DetailRewriteSentenceExsercise, ListTranslateSentenceExsercise, DetailTranslateSentenceExsercise, ChoseAnswerExserciseUploadImage, \
+ChoseAnswerExserciseUploadAudio, ExsercisesOfUnit
+
+from readings.views import ListReading, DetailReading, ReadingOfUnit
 
 urlpatterns = [
     #authenticate url
@@ -60,4 +66,25 @@ urlpatterns = [
     path('users/<int:pk>/scores', AdminGetTotalScore.as_view()),
     path('users/<int:pk>/unit-score', AdminGetTotalScoreUnit.as_view()),
     path('users/export-data-users', ExportDataUserView.as_view()),
+
+    path('exsercises/listen_and_read/', ListListenAndReadExsercise.as_view()),
+    path('exsercises/listen_and_read/<uuid:pk>/', DetailListenAndReadExsercise.as_view()),
+    path('exsercises/listen_and_read/<uuid:exsercise_id>/image', ListenAndReadExserciseUploadImage.as_view()),
+    path('exsercises/listen_and_read/<uuid:exsercise_id>/audio', ListenAndReadExserciseUploadAudio.as_view()),
+
+    path('exsercises/chose_answer/', ListChoseAnswerExsercise.as_view()),
+    path('exsercises/chose_answer/<uuid:pk>/', DetailChoseAnswerExsercise.as_view()),
+    path('exsercises/listen_and_read/<uuid:exsercise_id>/image', ChoseAnswerExserciseUploadImage.as_view()),
+    path('exsercises/listen_and_read/<uuid:exsercise_id>/audio', ChoseAnswerExserciseUploadAudio.as_view()),
+
+    path('exsercises/rewrite_answer/', ListRewriteSentenceExsercise.as_view()),
+    path('exsercises/rewrite_answer/<uuid:pk>/', DetailRewriteSentenceExsercise.as_view()),
+
+    path('exsercises/translate/', ListTranslateSentenceExsercise.as_view()),
+    path('exsercises/translate/<uuid:pk>/', DetailTranslateSentenceExsercise.as_view()),
+    path('categories/<uuid:category_id>/units/<uuid:unit_id>/exsercises/', ExsercisesOfUnit.as_view()),
+
+    path('readings/', ListReading.as_view()),
+    path('readings/<uuid:pk>/', DetailReading.as_view()),
+    path('categories/<uuid:category_id>/units/<uuid:unit_id>/reading/', ReadingOfUnit.as_view()),
 ]

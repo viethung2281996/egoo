@@ -1,10 +1,11 @@
 from rest_framework import generics
 from rest_framework.response import Response
 from api.permissons import UserPermission
+
 from api.views import BaseAPIView
 from conversations.models import Conversation
 from conversations.serializers import ConversationSerializer
-from . import serializers
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import parser_classes
 from egoo_core.cloudinary import CloudinaryUploader
@@ -13,12 +14,12 @@ from categories.models import Category
 
 class ListConversation(generics.ListCreateAPIView):
   queryset = Conversation.objects.all()
-  serializer_class = serializers.ConversationSerializer
+  serializer_class = ConversationSerializer
   permission_classes = (UserPermission,)
 
 class DetailConversation(generics.RetrieveUpdateDestroyAPIView):
   queryset = Conversation.objects.all()
-  serializer_class = serializers.ConversationSerializer
+  serializer_class = ConversationSerializer
   permission_classes = (UserPermission,)
 
 class ListConversationInUnit(BaseAPIView):

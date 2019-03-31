@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.response import Response
+from django.core.exceptions import ObjectDoesNotExist
+
 from api.permissons import UserPermission
 from api.views import BaseAPIView
 from categories.models import Category

@@ -61,6 +61,7 @@ class CategoryUploadImage(BaseAPIView):
          "message": "Object doesn't exist"
       }
       return Response(response)
+
     data = {}
     file = request.data['image']
     file_name = category.init_file_name(file)
@@ -69,8 +70,10 @@ class CategoryUploadImage(BaseAPIView):
          "message": "file name error"
       }
       return Response(response)
+
     uploader = CloudinaryUploader(file=file,public_id=file_name,folder="categories/images")
     r = uploader.upload()
+
     data['image'] = r['secure_url']
     serializer = CategorySerializer(category, data=data, partial=True)
     if serializer.is_valid():
@@ -108,6 +111,7 @@ class CategoryActivationCode(AdminAPIView):
          "message": "Object doesn't exist"
       }
       return Response(response)
+      
     activation_codes = category.activation_codes
     serializer = ActivationCodeSerializer(activation_codes, many=True)
     return Response(serializer.data)

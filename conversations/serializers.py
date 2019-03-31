@@ -5,6 +5,7 @@ from conversations.models import Conversation
 class ConversationSerializer(serializers.ModelSerializer):
   unit = serializers.PrimaryKeyRelatedField(many=False, queryset=Unit.objects.all())
   recommend = serializers.CharField(max_length=None, min_length=None, required=False, allow_blank=True)
+  
   def validate(self, data):
     if self.instance is None:
       list_order_in_unit = map(lambda x: x.order, data['unit'].list_conversation.all())

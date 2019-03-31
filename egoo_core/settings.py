@@ -50,7 +50,7 @@ DJANGO_APP = [
     'rest_auth',
     'rest_auth.registration',
     'django_extensions',
-    'cloudinary'
+    'cloudinary',
 ]
 
 FUNCTION_APP = [
@@ -62,6 +62,8 @@ FUNCTION_APP = [
     'speakers',
     'guides',
     'user',
+    'exsercises',
+    'readings',
 ]
 
 
@@ -139,7 +141,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'egoo_core.wsgi.application'
 
-if socket.gethostbyname(socket.gethostname()) in  ["localhost", "127.0.0.1", "127.0.1.1"]:
+if socket.gethostbyname(socket.gethostname()) in  ["localhost", "127.0.0.1", "127.0.1.1", '192.168.1.13']:
     print(socket.gethostbyname(socket.gethostname()))
     from egoo_core.config_local import *
 else:

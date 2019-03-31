@@ -4,6 +4,8 @@ from api.permissons import UserPermission
 from api.views import BaseAPIView
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import parser_classes
+from django.core.exceptions import ObjectDoesNotExist
+
 from egoo_core.cloudinary import CloudinaryUploader
 from notes.serializers import NoteSerializer
 from notes.models import Note
