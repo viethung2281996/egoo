@@ -14,8 +14,7 @@ from guides.views import ListGuide, DetailGuide, GuideOfUnit, GuideUploadImage, 
 from exsercises.views import ListListenAndReadExsercise, DetailListenAndReadExsercise, ListenAndReadExserciseUploadImage, \
 ListenAndReadExserciseUploadAudio, ListChoseAnswerExsercise, DetailChoseAnswerExsercise, ListRewriteSentenceExsercise, \
 DetailRewriteSentenceExsercise, ListTranslateSentenceExsercise, DetailTranslateSentenceExsercise, ChoseAnswerExserciseUploadImage, \
-ChoseAnswerExserciseUploadAudio, ExsercisesOfUnit
-
+ChoseAnswerExserciseUploadAudio, TranslateSentenceExserciseUploadImage, RewriteSentenceExserciseUploadAudio, ExsercisesOfUnit
 from readings.views import ListReading, DetailReading, ReadingOfUnit
 
 urlpatterns = [
@@ -74,14 +73,17 @@ urlpatterns = [
 
     path('exsercises/chose_answer/', ListChoseAnswerExsercise.as_view()),
     path('exsercises/chose_answer/<uuid:pk>/', DetailChoseAnswerExsercise.as_view()),
-    path('exsercises/listen_and_read/<uuid:exsercise_id>/image', ChoseAnswerExserciseUploadImage.as_view()),
-    path('exsercises/listen_and_read/<uuid:exsercise_id>/audio', ChoseAnswerExserciseUploadAudio.as_view()),
+    path('exsercises/chose_answer/<uuid:exsercise_id>/image', ChoseAnswerExserciseUploadImage.as_view()),
+    path('exsercises/chose_answer/<uuid:exsercise_id>/audio', ChoseAnswerExserciseUploadAudio.as_view()),
 
     path('exsercises/rewrite_answer/', ListRewriteSentenceExsercise.as_view()),
     path('exsercises/rewrite_answer/<uuid:pk>/', DetailRewriteSentenceExsercise.as_view()),
+    path('exsercises/rewrite_answer/<uuid:exsercise_id>/audio', RewriteSentenceExserciseUploadAudio.as_view()),
 
     path('exsercises/translate/', ListTranslateSentenceExsercise.as_view()),
     path('exsercises/translate/<uuid:pk>/', DetailTranslateSentenceExsercise.as_view()),
+    path('exsercises/translate/<uuid:exsercise_id>/image', TranslateSentenceExserciseUploadImage.as_view()),
+
     path('categories/<uuid:category_id>/units/<uuid:unit_id>/exsercises/', ExsercisesOfUnit.as_view()),
 
     path('readings/', ListReading.as_view()),

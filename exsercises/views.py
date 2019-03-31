@@ -71,6 +71,14 @@ class ListenAndReadExserciseUploadAudio(AdminAPIView):
       response = {"message": "Upload file failed"}
       return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
+class ListChoseAnswerExsercise(ListExsercise):
+  queryset = ChoseAnswerExsercise.objects.all()
+  serializer_class = ChoseAnswerExserciseSerializer
+
+class DetailChoseAnswerExsercise(DetailExsercise):
+  queryset = ChoseAnswerExsercise.objects.all()
+  serializer_class = ChoseAnswerExserciseSerializer
+
 @parser_classes((MultiPartParser, ))
 class ChoseAnswerExserciseUploadImage(AdminAPIView):
   def post(self, request, exsercise_id):
@@ -115,14 +123,6 @@ class ChoseAnswerExserciseUploadAudio(AdminAPIView):
       response = {"message": "Upload file failed"}
       return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-class ListChoseAnswerExsercise(ListExsercise):
-  queryset = ChoseAnswerExsercise.objects.all()
-  serializer_class = ChoseAnswerExserciseSerializer
-
-class DetailChoseAnswerExsercise(DetailExsercise):
-  queryset = ChoseAnswerExsercise.objects.all()
-  serializer_class = ChoseAnswerExserciseSerializer
-
 class ListRewriteSentenceExsercise(ListExsercise):
   queryset = RewriteSentenceExsercise.objects.all()
   serializer_class = RewriteSentenceExserciseSerializer
@@ -131,6 +131,28 @@ class DetailRewriteSentenceExsercise(DetailExsercise):
   queryset = RewriteSentenceExsercise.objects.all()
   serializer_class = RewriteSentenceExserciseSerializer
 
+@parser_classes((MultiPartParser, ))
+class RewriteSentenceExserciseUploadAudio(AdminAPIView):
+  def post(self, request, exsercise_id):
+    exsercise = RewriteSentenceExserciseHelper.get_object(exsercise_id)
+    file = request.data['audio']
+
+    if exsercise is None or file is None:
+      response = {"message": "Invalid input data"}
+      return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+    result_url = RewriteSentenceExserciseHelper.upload(exsercise, file, folder="exsercises/video", resource_type="video")
+
+    data = {}
+    data['audio'] = result_url
+
+    data = RewriteSentenceExserciseHelper.update_data(exsercise, data=data)
+    if data is not None:
+      return Response(data, status=status.HTTP_200_OK)
+    else:
+      response = {"message": "Upload file failed"}
+      return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
 class ListTranslateSentenceExsercise(ListExsercise):
   queryset = TranslateSentenceExsercise.objects.all()
   serializer_class = TranslateSentenceExserciseSerializer
@@ -138,6 +160,28 @@ class ListTranslateSentenceExsercise(ListExsercise):
 class DetailTranslateSentenceExsercise(DetailExsercise):
   queryset = TranslateSentenceExsercise.objects.all()
   serializer_class = TranslateSentenceExserciseSerializer
+
+@parser_classes((MultiPartParser, ))
+class TranslateSentenceExserciseUploadImage(AdminAPIView):
+  def post(self, request, exsercise_id):
+    exsercise = TranslateSentenceExserciseHelper.get_object(exsercise_id)
+    file = request.data['image']
+
+    if exsercise is None or file is None:
+      response = {"message": "Invalid input data"}
+      return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+    result_url = TranslateSentenceExserciseHelper.upload(exsercise, file, folder="exsercises/images", resource_type="image")
+
+    data = {}
+    data['image'] = result_url
+
+    data = TranslateSentenceExserciseHelper.update_data(exsercise, data=data)
+    if data is not None:
+      return Response(data, status=status.HTTP_200_OK)
+    else:
+      response = {"message": "Upload file failed"}
+      return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 class ExsercisesOfUnit(BaseAPIView):
   def get(self, request, category_id, unit_id):

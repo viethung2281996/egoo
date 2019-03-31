@@ -1,6 +1,6 @@
 from commons.common_helpers import CommonHelper
-from .models import Exsercise, ListenAndReadExsercise, ChoseAnswerExsercise
-from .serializers import ExserciseSerializer, ListenAndReadExserciseSerializer, ChoseAnswerExserciseSerializer
+from .models import Exsercise, ListenAndReadExsercise, ChoseAnswerExsercise, RewriteSentenceExsercise, TranslateSentenceExsercise
+from .serializers import ExserciseSerializer, ListenAndReadExserciseSerializer, ChoseAnswerExserciseSerializer, TranslateSentenceExserciseSerializer, RewriteSentenceExserciseSerializer
 
 class ExserciseHelper(CommonHelper):
   model_class = Exsercise
@@ -13,3 +13,11 @@ class ListenAndReadExserciseHelper(ExserciseHelper):
 class ChoseAnswerExserciseHelper(ExserciseHelper):
   model_class = ChoseAnswerExsercise
   serializer_class = ChoseAnswerExserciseSerializer
+
+class TranslateSentenceExserciseHelper(ExserciseHelper):
+  model_class = TranslateSentenceExsercise
+  serializer_class = TranslateSentenceExserciseSerializer
+
+class RewriteSentenceExserciseHelper(ExserciseHelper):
+  model_class = RewriteSentenceExsercise
+  serializer_class = RewriteSentenceExserciseSerializer

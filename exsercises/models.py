@@ -38,7 +38,9 @@ class ChoseAnswerExsercise(Exsercise):
 class RewriteSentenceExsercise(Exsercise):
   phrases = JSONField(default={}) # json field
   answer = models.TextField(null=True, blank=True)
+  audio = models.TextField(null=True, blank=True)
 
 class TranslateSentenceExsercise(Exsercise):
   sentence = models.TextField(null=True, blank=True)
   answer = models.TextField(null=True, blank=True)
+  image = models.TextField(null=True, blank=True)
