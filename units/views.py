@@ -1,11 +1,12 @@
 from rest_framework import generics, permissions,mixins
 from rest_framework.response import Response
-from api.permissons import UserPermission
-from api.views import BaseAPIView
+from commons.permissions import UserPermission
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import parser_classes
 from django.core.exceptions import ObjectDoesNotExist
 from units.models import Unit
+
+from commons.views import UserAPIView, AdminAPIView
 from speakers.models import Speaker
 from units.serializers import UnitSerializer
 from categories.models import Category
@@ -22,7 +23,7 @@ class DetailUnit(generics.RetrieveUpdateDestroyAPIView):
   serializer_class = UnitSerializer
   permission_classes = (UserPermission,)
 
-class ListUnitInCategory(BaseAPIView):
+class ListUnitInCategory(UserAPIView):
   def get(self, request, category_id):
     try:
       category = Category.objects.get(id=category_id)
@@ -52,7 +53,7 @@ class ListUnitInCategory(BaseAPIView):
     return units
 
 @parser_classes((MultiPartParser, ))
-class UnitUploadImage(BaseAPIView):
+class UnitUploadImage(AdminAPIView):
   def post(self, request, unit_id):
     try:
       unit = Unit.objects.get(id=unit_id)

@@ -1,11 +1,11 @@
 from rest_framework import generics
 from rest_framework.response import Response
-from api.permissons import UserPermission
-from api.views import BaseAPIView
+from commons.permissions import UserPermission
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import parser_classes
 from django.core.exceptions import ObjectDoesNotExist
 
+from commons.views import UserAPIView
 from egoo_core.cloudinary import CloudinaryUploader
 from notes.serializers import NoteSerializer
 from notes.models import Note
@@ -22,7 +22,7 @@ class DetailNote(generics.RetrieveUpdateDestroyAPIView):
   serializer_class = NoteSerializer
   permission_classes = (UserPermission,)
 
-class ListNoteInUnit(BaseAPIView):
+class ListNoteInUnit(UserAPIView):
   def get(self, request, category_id, unit_id):
     try:
       category = Category.objects.get(id=category_id)
@@ -37,7 +37,7 @@ class ListNoteInUnit(BaseAPIView):
     return Response(serializer.data)
 
 @parser_classes((MultiPartParser, ))
-class UploadAudio(BaseAPIView):
+class UploadAudio(UserAPIView):
   def post(self, request, note_id):
     try:
       note = Note.objects.get(id=note_id)

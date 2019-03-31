@@ -1,6 +1,6 @@
 import uuid
 from django.db import models
-from api.models import BaseModel
+from commons.models import BaseModel
 
 # Create your models here.
 CODE_STATUS_CHOICE = (

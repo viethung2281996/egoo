@@ -1,4 +1,4 @@
-from commons.common_helpers import CommonHelper
+from commons.helpers import CommonHelper
 from .models import Exsercise, ListenAndReadExsercise, ChoseAnswerExsercise, RewriteSentenceExsercise, TranslateSentenceExsercise
 from .serializers import ExserciseSerializer, ListenAndReadExserciseSerializer, ChoseAnswerExserciseSerializer, TranslateSentenceExserciseSerializer, RewriteSentenceExserciseSerializer
 

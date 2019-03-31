@@ -1,7 +1,7 @@
 import uuid
 from django.db import models
 
-from api.models import BaseModel
+from commons.models import BaseModel
 from units.models import Unit
 
 class Reading(BaseModel):

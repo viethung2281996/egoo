@@ -12,7 +12,7 @@ from .models import CustomInformation
 from categories.models import Category
 from units.models import Unit
 from user.models import UserData
-from api.views import BaseAPIView, AdminAPIView
+from commons.views import AdminAPIView
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from egoo_core.cloudinary import CloudinaryUploader

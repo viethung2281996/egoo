@@ -1,14 +1,14 @@
 from rest_framework import generics
 from rest_framework.response import Response
-from api.permissons import UserPermission
+from commons.permissions import UserPermission
 from categories.models import Category
 from user.models import Ticket
 from .serializers import CategorySerializer
-from api.views import BaseAPIView
+from commons.views import UserAPIView
 import datetime
 # Create your views here.
 
-class ListCategory(BaseAPIView):
+class ListCategory(UserAPIView):
 	def get(self, request):
 		serializer = CategorySerializer(Category.objects.all(), many=True)
 		categories = serializer.data

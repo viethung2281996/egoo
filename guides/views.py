@@ -3,8 +3,8 @@ from rest_framework import generics
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
 
-from api.permissons import UserPermission
-from api.views import BaseAPIView
+from commons.permissions import UserPermission
+from commons.views import UserAPIView
 from categories.models import Category
 from units.models import Unit
 from guides.models import Guide
@@ -24,7 +24,7 @@ class DetailGuide(generics.RetrieveUpdateDestroyAPIView):
   serializer_class = GuideSerializer
   permission_classes = (UserPermission,)
 
-class GuideOfUnit(BaseAPIView):
+class GuideOfUnit(UserAPIView):
   def get(self, request, category_id, unit_id):
     try:
       category = Category.objects.get(id=category_id)
@@ -44,7 +44,7 @@ class GuideOfUnit(BaseAPIView):
     return Response(serializer.data)
 
 @parser_classes((MultiPartParser, ))
-class GuideUploadImage(BaseAPIView):
+class GuideUploadImage(UserAPIView):
   def post(self, request, guide_id):
     try:
       guide = Guide.objects.get(id=guide_id)
@@ -76,7 +76,7 @@ class GuideUploadImage(BaseAPIView):
       return Response(response)
 
 @parser_classes((MultiPartParser, ))
-class GuideUploadVideo(BaseAPIView):
+class GuideUploadVideo(UserAPIView):
   def post(self, request, guide_id):
     try:
       guide = Guide.objects.get(id=guide_id)

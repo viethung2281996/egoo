@@ -1,6 +1,6 @@
 import uuid
 from django.db import models
-from api.models import BaseModel
+from commons.models import BaseModel
 from django.contrib.auth.models import User
 from categories.models import Category, ActivationCode
 

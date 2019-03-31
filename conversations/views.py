@@ -1,8 +1,8 @@
 from rest_framework import generics
 from rest_framework.response import Response
-from api.permissons import UserPermission
 
-from api.views import BaseAPIView
+from commons.permissions import UserPermission
+from commons.views import UserAPIView
 from conversations.models import Conversation
 from conversations.serializers import ConversationSerializer
 from django.core.exceptions import ObjectDoesNotExist
@@ -22,7 +22,7 @@ class DetailConversation(generics.RetrieveUpdateDestroyAPIView):
   serializer_class = ConversationSerializer
   permission_classes = (UserPermission,)
 
-class ListConversationInUnit(BaseAPIView):
+class ListConversationInUnit(UserAPIView):
   def get(self, request, category_id, unit_id):
     try:
       category = Category.objects.get(id=category_id)
@@ -37,7 +37,7 @@ class ListConversationInUnit(BaseAPIView):
     return Response(serializer.data)
 
 @parser_classes((MultiPartParser, ))
-class UploadImage(BaseAPIView):
+class UploadImage(UserAPIView):
   def post(self, request, conversation_id):
     try:
       conversation = Conversation.objects.get(id=conversation_id)
@@ -69,7 +69,7 @@ class UploadImage(BaseAPIView):
       return Response(response)
 
 @parser_classes((MultiPartParser, ))
-class ConversationUploadAudio(BaseAPIView):
+class ConversationUploadAudio(UserAPIView):
   def post(self, request, conversation_id):
     try:
       conversation = Conversation.objects.get(id=conversation_id)

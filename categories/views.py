@@ -1,7 +1,7 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
-from api.permissons import UserPermission
-from api.views import BaseAPIView, AdminAPIView
+from commons.permissions import UserPermission
+from commons.views import UserAPIView, AdminAPIView
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import parser_classes
@@ -52,7 +52,7 @@ class DetaiCategory(generics.RetrieveUpdateDestroyAPIView):
   permission_classes = (UserPermission,)
 
 @parser_classes((MultiPartParser, ))
-class CategoryUploadImage(BaseAPIView):
+class CategoryUploadImage(AdminAPIView):
   def post(self, request, category_id):
     try:
       category = Category.objects.get(id=category_id)
@@ -85,7 +85,7 @@ class CategoryUploadImage(BaseAPIView):
       }
       return Response(response)
 
-class UserGetTotalScore(BaseAPIView):
+class UserGetTotalScore(UserAPIView):
   def get(self, request):
     user_id = self.request.user.id
 

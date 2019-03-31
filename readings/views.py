@@ -1,11 +1,11 @@
 from rest_framework import generics, status
-from api.permissons import UserPermission
+from commons.permissions import UserPermission
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
 
 from .models import Reading
 from .serializers import ReadingSerializer
-from api.views import BaseAPIView
+from commons.views import UserAPIView
 from categories.models import Category
 
 # Create your views here.
@@ -19,7 +19,7 @@ class DetailReading(generics.RetrieveUpdateDestroyAPIView):
   serializer_class = ReadingSerializer
   permission_classes = (UserPermission,)
 
-class ReadingOfUnit(BaseAPIView):
+class ReadingOfUnit(UserAPIView):
   def get(self, request, category_id, unit_id):
     try:
       category = Category.objects.get(id=category_id)

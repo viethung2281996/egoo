@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from api.permissons import UserPermission, AdminPermission
+from commons.permissions import UserPermission, AdminPermission
 
 class UserAPIView(APIView):
   permission_classes = (UserPermission,)

@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics, status
-from api.permissons import UserPermission
-from api.views import AdminAPIView
+from commons.permissions import UserPermission
 from rest_framework.decorators import parser_classes
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
@@ -10,7 +9,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from .models import Exsercise, ListenAndReadExsercise, ChoseAnswerExsercise, RewriteSentenceExsercise, TranslateSentenceExsercise
 from .helpers import ListenAndReadExserciseHelper, ChoseAnswerExserciseHelper
 from .serializers import ExserciseSerializer, ListenAndReadExserciseSerializer, ChoseAnswerExserciseSerializer, RewriteSentenceExserciseSerializer, TranslateSentenceExserciseSerializer
-from api.views import BaseAPIView
+from commons.views import UserAPIView, AdminAPIView
 from categories.models import Category
 # Create your views here.
 class ListExsercise(generics.ListCreateAPIView):
@@ -183,7 +182,7 @@ class TranslateSentenceExserciseUploadImage(AdminAPIView):
       response = {"message": "Upload file failed"}
       return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-class ExsercisesOfUnit(BaseAPIView):
+class ExsercisesOfUnit(UserAPIView):
   def get(self, request, category_id, unit_id):
     try:
       category = Category.objects.get(id=category_id)
