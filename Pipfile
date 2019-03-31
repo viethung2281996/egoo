@@ -36,6 +36,7 @@ cloudinary = "*"
 pip = "*"
 celery = "*"
 django-celery = "*"
+jsonfield = "*"
 
 [requires]
 python_version = "3.5"
