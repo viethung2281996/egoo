@@ -140,6 +140,7 @@ class RewriteSentenceExserciseSerializer(serializers.ModelSerializer):
       'order',
       'phrases',
       'answer',
+      'audio',
       'unit'
       )
     model = RewriteSentenceExsercise
@@ -158,6 +159,7 @@ class TranslateSentenceExserciseSerializer(serializers.ModelSerializer):
     fields = (
       'id',
       'type',
+      'image',
       'order',
       'sentence',
       'answer',
