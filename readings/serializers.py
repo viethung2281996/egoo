@@ -6,6 +6,13 @@ class QuestionSerializer(serializers.ModelSerializer):
   reading = serializers.PrimaryKeyRelatedField(many=False, queryset=Reading.objects.all())
   chose_answers = serializers.DictField(child=serializers.CharField())
 
+  def validate(self, data):
+    if self.instance is None:
+      question_orders = map(lambda x: x.order, data['reading'].questions.all())
+      if data['order'] in question_orders:
+        raise serializers.ValidationError("Order of exsercise must unique in unit")
+    return data
+
   class Meta:
     fields = (
       'question',
