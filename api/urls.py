@@ -15,7 +15,7 @@ from exsercises.views import ListListenAndReadExsercise, DetailListenAndReadExse
 ListenAndReadExserciseUploadAudio, ListChoseAnswerExsercise, DetailChoseAnswerExsercise, ListRewriteSentenceExsercise, \
 DetailRewriteSentenceExsercise, ListTranslateSentenceExsercise, DetailTranslateSentenceExsercise, ChoseAnswerExserciseUploadImage, \
 ChoseAnswerExserciseUploadAudio, TranslateSentenceExserciseUploadImage, RewriteSentenceExserciseUploadAudio, ExsercisesOfUnit
-from readings.views import ListReading, DetailReading, ReadingOfUnit
+from readings.views import ListReading, DetailReading, ReadingOfUnit, ListQuestion, DetailQuestion
 
 urlpatterns = [
     #authenticate url
@@ -89,4 +89,7 @@ urlpatterns = [
     path('readings/', ListReading.as_view()),
     path('readings/<uuid:pk>/', DetailReading.as_view()),
     path('categories/<uuid:category_id>/units/<uuid:unit_id>/reading/', ReadingOfUnit.as_view()),
+
+    path('questions/', ListQuestion.as_view()),
+    path('questions/<uuid:pk>/', DetailQuestion.as_view()),
 ]
