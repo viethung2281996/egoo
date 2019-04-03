@@ -185,7 +185,6 @@ class TranslateSentenceExserciseUploadImage(AdminAPIView):
 class ExsercisesOfUnit(UserAPIView):
   def get(self, request, category_id, unit_id):
     try:
-      import pdb;pdb.set_trace()
       category = Category.objects.get(id=category_id)
       unit = category.list_unit.get(id=unit_id)
     except ObjectDoesNotExist:
