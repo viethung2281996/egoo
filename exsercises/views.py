@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
 
 from .models import Exsercise, ListenAndReadExsercise, ChoseAnswerExsercise, RewriteSentenceExsercise, TranslateSentenceExsercise
-from .helpers import ListenAndReadExserciseHelper, ChoseAnswerExserciseHelper
+from .helpers import ListenAndReadExserciseHelper, ChoseAnswerExserciseHelper, TranslateSentenceExserciseHelper, RewriteSentenceExserciseHelper
 from .serializers import ExserciseSerializer, ListenAndReadExserciseSerializer, ChoseAnswerExserciseSerializer, RewriteSentenceExserciseSerializer, TranslateSentenceExserciseSerializer
 from commons.views import UserAPIView, AdminAPIView
 from categories.models import Category
