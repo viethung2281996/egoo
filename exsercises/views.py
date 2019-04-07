@@ -163,24 +163,27 @@ class DetailTranslateSentenceExsercise(DetailExsercise):
 @parser_classes((MultiPartParser, ))
 class TranslateSentenceExserciseUploadImage(AdminAPIView):
   def post(self, request, exsercise_id):
-    exsercise = TranslateSentenceExserciseHelper.get_object(exsercise_id)
-    file = request.data['image']
+    try:
+      exsercise = TranslateSentenceExserciseHelper.get_object(exsercise_id)
+      file = request.data['image']
 
-    if exsercise is None or file is None:
-      response = {"message": "Invalid input data"}
-      return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+      if exsercise is None or file is None:
+        response = {"message": "Invalid input data"}
+        return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-    result_url = TranslateSentenceExserciseHelper.upload(exsercise, file, folder="exsercises/images", resource_type="image")
+      result_url = TranslateSentenceExserciseHelper.upload(exsercise, file, folder="exsercises/images", resource_type="image")
 
-    data = {}
-    data['image'] = result_url
+      data = {}
+      data['image'] = result_url
 
-    data = TranslateSentenceExserciseHelper.update_data(exsercise, data=data)
-    if data is not None:
-      return Response(data, status=status.HTTP_200_OK)
-    else:
-      response = {"message": "Upload file failed"}
-      return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+      data = TranslateSentenceExserciseHelper.update_data(exsercise, data=data)
+      if data is not None:
+        return Response(data, status=status.HTTP_200_OK)
+      else:
+        response = {"message": "Upload file failed"}
+        return Response(response, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+    except Exception as e:
+      raise e
 
 class ExsercisesOfUnit(UserAPIView):
   def get(self, request, category_id, unit_id):
