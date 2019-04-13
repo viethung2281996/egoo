@@ -19,6 +19,7 @@ class QuestionSerializer(serializers.ModelSerializer):
       'chose_answers',
       'answer',
       'order',
+      'explain',
       'reading'
       )
     model = Question

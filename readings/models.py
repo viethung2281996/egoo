@@ -20,7 +20,8 @@ class Question(BaseModel):
   chose_answers = JSONField(default={}) # array field
   answer = models.TextField(null=True, blank=True)
   order = models.IntegerField(null=False, default=1)
-
+  explain = models.TextField(null=True, blank=True)
+  
   reading = models.ForeignKey(
     Reading,
     on_delete=models.CASCADE,

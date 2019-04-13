@@ -28,19 +28,23 @@ class ListenAndReadExsercise(Exsercise):
   image = models.TextField(null=True, blank=True)
   answer = models.TextField(null=True, blank=True)
   audio = models.TextField(null=True, blank=True)
+  explain = models.TextField(null=True, blank=True)
 
 class ChoseAnswerExsercise(Exsercise):
   image = models.TextField(null=True, blank=True)
   audio = models.TextField(null=True, blank=True)
   chose_answers = JSONField(default={}) # array field
   answer = models.TextField(null=True, blank=True)
+  explain = models.TextField(null=True, blank=True)
 
 class RewriteSentenceExsercise(Exsercise):
   phrases = JSONField(default={}) # json field
   answer = models.TextField(null=True, blank=True)
   audio = models.TextField(null=True, blank=True)
+  explain = models.TextField(null=True, blank=True)
 
 class TranslateSentenceExsercise(Exsercise):
   sentence = models.TextField(null=True, blank=True)
   answer = models.TextField(null=True, blank=True)
   image = models.TextField(null=True, blank=True)
+  explain = models.TextField(null=True, blank=True)

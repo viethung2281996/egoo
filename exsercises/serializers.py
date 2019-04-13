@@ -94,6 +94,7 @@ class ListenAndReadExserciseSerializer(serializers.ModelSerializer):
       'image',
       'audio',
       'answer',
+      'explain',
       'unit',
       )
     model = ListenAndReadExsercise
@@ -118,7 +119,8 @@ class ChoseAnswerExserciseSerializer(serializers.ModelSerializer):
       'audio',
       'chose_answers',
       'answer',
-      'unit'
+      'explain',
+      'unit',
       )
     model = ChoseAnswerExsercise
 
@@ -141,6 +143,7 @@ class RewriteSentenceExserciseSerializer(serializers.ModelSerializer):
       'phrases',
       'answer',
       'audio',
+      'explain',
       'unit'
       )
     model = RewriteSentenceExsercise
@@ -163,6 +166,7 @@ class TranslateSentenceExserciseSerializer(serializers.ModelSerializer):
       'order',
       'sentence',
       'answer',
+      'explain',
       'unit'
       )
     model = TranslateSentenceExsercise
