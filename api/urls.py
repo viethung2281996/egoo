@@ -14,7 +14,8 @@ from guides.views import ListGuide, DetailGuide, GuideOfUnit, GuideUploadImage, 
 from exsercises.views import ListListenAndReadExsercise, DetailListenAndReadExsercise, ListenAndReadExserciseUploadImage, \
 ListenAndReadExserciseUploadAudio, ListChoseAnswerExsercise, DetailChoseAnswerExsercise, ListRewriteSentenceExsercise, \
 DetailRewriteSentenceExsercise, ListTranslateSentenceExsercise, DetailTranslateSentenceExsercise, ChoseAnswerExserciseUploadImage, \
-ChoseAnswerExserciseUploadAudio, TranslateSentenceExserciseUploadImage, RewriteSentenceExserciseUploadAudio, ExsercisesOfUnit
+ChoseAnswerExserciseUploadAudio, TranslateSentenceExserciseUploadImage, RewriteSentenceExserciseUploadAudio, ExsercisesOfUnit, \
+ListExsercise, DetailExsercise
 from readings.views import ListReading, DetailReading, ReadingOfUnit, ListQuestion, DetailQuestion
 
 urlpatterns = [
@@ -65,6 +66,8 @@ urlpatterns = [
     path('users/<int:pk>/scores', AdminGetTotalScore.as_view()),
     path('users/<int:pk>/unit-score', AdminGetTotalScoreUnit.as_view()),
     path('users/export-data-users', ExportDataUserView.as_view()),
+
+    path('exsercises/<uuid:pk>/', DetailExsercise.as_view()),
 
     path('exsercises/listen_and_read/', ListListenAndReadExsercise.as_view()),
     path('exsercises/listen_and_read/<uuid:pk>/', DetailListenAndReadExsercise.as_view()),

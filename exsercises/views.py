@@ -13,9 +13,11 @@ from commons.views import UserAPIView, AdminAPIView
 from categories.models import Category
 # Create your views here.
 class ListExsercise(generics.ListCreateAPIView):
+  queryset = Exsercise.objects.all()
   permission_classes = (UserPermission,)
 
 class DetailExsercise(generics.RetrieveUpdateDestroyAPIView):
+  queryset = Exsercise.objects.all()
   permission_classes = (UserPermission,)
 
 class ListListenAndReadExsercise(ListExsercise):

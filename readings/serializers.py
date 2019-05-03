@@ -15,6 +15,7 @@ class QuestionSerializer(serializers.ModelSerializer):
 
   class Meta:
     fields = (
+      'id',
       'question',
       'chose_answers',
       'answer',
