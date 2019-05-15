@@ -18,10 +18,12 @@ from django.urls import path, include
 from .api_settings import API_VERSION_V1, API_VERSION_V2
 from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 from django.conf.urls.static import static
+from django.conf.urls import url
 from . import settings
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path(API_VERSION_V1, include('api.urls')),
     path(API_VERSION_V2, include('api.v2.urls')),
+    url(r'^ht/', include('health_check.urls')),
 ]
