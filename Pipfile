@@ -37,6 +37,7 @@ pip = "*"
 celery = "*"
 django-celery = "*"
 jsonfield = "*"
+scout-apm = "*"
 
 [requires]
 python_version = "3.5"
