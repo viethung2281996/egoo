@@ -38,6 +38,10 @@ celery = "*"
 django-celery = "*"
 jsonfield = "*"
 scout-apm = "*"
+healch-check = "*"
+health-check = "*"
+install = "*"
+django-health-check = "*"
 
 [requires]
 python_version = "3.5"

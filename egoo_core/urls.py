@@ -25,5 +25,4 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     path(API_VERSION_V1, include('api.urls')),
     path(API_VERSION_V2, include('api.v2.urls')),
-    url(r'^ht/', include('health_check.urls')),
 ]
